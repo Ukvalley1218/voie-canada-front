@@ -4,8 +4,11 @@ import Section from '../components/ui/Section';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import { inquiryService } from '../services';
+import { useSettings } from '../contexts/SettingsContext';
 
 const ContactPage = () => {
+  const { contact } = useSettings();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,24 +49,8 @@ const ContactPage = () => {
     }
   };
 
-  const offices = [
-    {
-      country: 'Canada',
-      city: 'Toronto',
-      address: '123 Main Street, Suite 400',
-      phone: '+1 (416) XXX-XXXX',
-      email: 'toronto@voiecanada.com',
-      hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST'
-    },
-    {
-      country: 'India',
-      city: 'New Delhi',
-      address: '456 Business Park, Floor 5',
-      phone: '+91 XXX XXX XXXX',
-      email: 'delhi@voiecanada.com',
-      hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST'
-    },
-  ];
+  // Get offices from settings, fallback to empty array
+  const offices = contact?.offices || [];
 
   const serviceOptions = [
     { value: 'immigration', label: 'Immigration Services' },
@@ -91,6 +78,7 @@ const ContactPage = () => {
     ]
   };
 
+  // Build contact info array from settings
   const contactInfo = [
     {
       icon: (
@@ -99,20 +87,20 @@ const ContactPage = () => {
         </svg>
       ),
       title: 'Email',
-      value: 'info@voiecanada.com',
-      href: 'mailto:info@voiecanada.com'
+      value: contact?.email || 'info@voiecanada.com',
+      href: `mailto:${contact?.email || 'info@voiecanada.com'}`
     },
-    {
+    ...(contact?.phone ? [{
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
         </svg>
       ),
       title: 'Phone',
-      value: '+1 (XXX) XXX-XXXX',
-      href: 'tel:+1XXXXXXXXXX'
-    },
-    {
+      value: contact.phone,
+      href: `tel:${contact.phone.replace(/\D/g, '')}`
+    }] : []),
+    ...(contact?.whatsapp ? [{
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.793.372-.272.299-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -120,9 +108,23 @@ const ContactPage = () => {
       ),
       title: 'WhatsApp',
       value: 'Chat with us on WhatsApp',
-      href: 'https://wa.me/1XXXXXXXXXX'
-    }
+      href: `https://wa.me/${contact.whatsapp.replace(/\D/g, '')}`
+    }] : [])
   ];
+
+  // Country flag emoji mapping
+  const countryFlags = {
+    'Canada': '🇨🇦',
+    'India': '🇮🇳',
+    'USA': '🇺🇸',
+    'United States': '🇺🇸',
+    'UK': '🇬🇧',
+    'United Kingdom': '🇬🇧',
+    'Australia': '🇦🇺',
+    'UAE': '🇦🇪',
+    'Philippines': '🇵🇭',
+    'Nigeria': '🇳🇬'
+  };
 
   return (
     <>
@@ -353,7 +355,7 @@ const ContactPage = () => {
               Our Offices
             </h3>
             <div className="space-y-4">
-              {offices.map((office, index) => (
+              {offices.length > 0 ? offices.map((office, index) => (
                 <div
                   key={index}
                   className="bg-secondary-gray rounded-xl p-6 hover:shadow-card transition-all duration-300 hover:-translate-y-1 group"
@@ -365,41 +367,64 @@ const ContactPage = () => {
                 >
                   <div className="flex items-center mb-3">
                     <span className="text-2xl mr-2 transition-transform duration-300 group-hover:scale-110">
-                      {office.country === 'Canada' ? '🇨🇦' : '🇮🇳'}
+                      {countryFlags[office.country] || '🌍'}
                     </span>
                     <h4 className="font-heading font-semibold text-text-dark group-hover:text-primary-blue transition-colors">
                       {office.city}, {office.country}
                     </h4>
                   </div>
                   <div className="space-y-2 text-sm text-text-muted">
-                    <p className="flex items-center group-hover:text-text-dark transition-colors">
-                      <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      {office.address}
-                    </p>
-                    <p className="flex items-center group-hover:text-text-dark transition-colors">
-                      <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                      {office.phone}
-                    </p>
-                    <p className="flex items-center group-hover:text-text-dark transition-colors">
-                      <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      {office.email}
-                    </p>
-                    <p className="flex items-center group-hover:text-text-dark transition-colors">
-                      <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {office.hours}
-                    </p>
+                    {office.address && (
+                      <p className="flex items-center group-hover:text-text-dark transition-colors">
+                        <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {office.address}
+                      </p>
+                    )}
+                    {office.phone && (
+                      <p className="flex items-center group-hover:text-text-dark transition-colors">
+                        <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        {office.phone}
+                      </p>
+                    )}
+                    {office.email && (
+                      <p className="flex items-center group-hover:text-text-dark transition-colors">
+                        <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        {office.email}
+                      </p>
+                    )}
+                    {office.hours && (
+                      <p className="flex items-center group-hover:text-text-dark transition-colors">
+                        <svg className="w-4 h-4 mr-2 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {office.hours}
+                      </p>
+                    )}
+                    {office.mapLink && (
+                      <a
+                        href={office.mapLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center mt-2 text-primary-blue hover:text-blue-700 font-medium transition-colors"
+                      >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
+                        View on Map
+                      </a>
+                    )}
                   </div>
                 </div>
-              ))}
+              )) : (
+                <p className="text-text-muted text-sm">Contact us for office locations.</p>
+              )}
             </div>
           </div>
         </div>
@@ -411,30 +436,59 @@ const ContactPage = () => {
           <h2 className="text-2xl font-heading font-bold text-primary-blue mb-2">
             Find Us
           </h2>
-          <p className="text-text-muted">Visit our offices in Canada and India</p>
+          <p className="text-text-muted">Visit our offices around the world</p>
         </div>
 
         <div
           ref={mapRef}
-          className="bg-white rounded-xl shadow-card overflow-hidden h-96"
+          className="bg-white rounded-xl shadow-card overflow-hidden"
           style={{
             opacity: isMapVisible ? 1 : 0,
             transform: isMapVisible ? 'translateY(0)' : 'translateY(30px)',
             transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
-          {/* Placeholder for map - you would integrate Google Maps here */}
-          <div className="w-full h-full bg-secondary-gray flex items-center justify-center group">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary-blue/10 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
-                <svg className="w-10 h-10 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+          {/* Show office cards with map links */}
+          <div className="p-6">
+            {offices.filter(office => office.mapLink).length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {offices.filter(office => office.mapLink).map((office, index) => (
+                  <a
+                    key={index}
+                    href={office.mapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-secondary-gray rounded-lg p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+                  >
+                    <div className="flex items-center mb-2">
+                      <span className="text-2xl mr-2">{countryFlags[office.country] || '🌍'}</span>
+                      <h4 className="font-heading font-semibold text-text-dark group-hover:text-primary-blue transition-colors">
+                        {office.city}, {office.country}
+                      </h4>
+                    </div>
+                    {office.address && (
+                      <p className="text-sm text-text-muted mb-2">{office.address}</p>
+                    )}
+                    <div className="flex items-center text-primary-blue text-sm font-medium">
+                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                      </svg>
+                      Open in Google Maps
+                    </div>
+                  </a>
+                ))}
               </div>
-              <p className="text-text-muted group-hover:text-text-dark transition-colors">Map integration coming soon</p>
-              <p className="text-sm text-text-muted mt-2 group-hover:text-text-dark transition-colors">Contact us for office locations and directions</p>
-            </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-20 h-20 bg-primary-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-10 h-10 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <p className="text-text-muted">Contact us for office locations and directions</p>
+              </div>
+            )}
           </div>
         </div>
       </Section>
@@ -460,9 +514,16 @@ const ContactPage = () => {
             <Button to="/assessment" variant="gold" size="lg" className="hover-lift">
               Free Assessment
             </Button>
-            <Button to="https://wa.me/1XXXXXXXXXX" variant="secondary" size="lg" className="!bg-white/10 !border-white !text-white hover:!bg-white hover:!text-primary-blue hover-lift">
-              WhatsApp Us
-            </Button>
+            {contact?.whatsapp && (
+              <Button
+                to={`https://wa.me/${contact.whatsapp.replace(/\D/g, '')}`}
+                variant="secondary"
+                size="lg"
+                className="!bg-white/10 !border-white !text-white hover:!bg-white hover:!text-primary-blue hover-lift"
+              >
+                WhatsApp Us
+              </Button>
+            )}
           </div>
         </div>
       </Section>

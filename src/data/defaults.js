@@ -45,7 +45,8 @@ export const defaultSettings = {
         address: '123 Main Street, Suite 400',
         phone: '+1 (416) XXX-XXXX',
         email: 'toronto@voiecanada.com',
-        hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST'
+        hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST',
+        mapLink: ''
       },
       {
         country: 'India',
@@ -53,7 +54,8 @@ export const defaultSettings = {
         address: '456 Business Park, Floor 5',
         phone: '+91 XXX XXX XXXX',
         email: 'delhi@voiecanada.com',
-        hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST'
+        hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST',
+        mapLink: ''
       }
     ]
   },
