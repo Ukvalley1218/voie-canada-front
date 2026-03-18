@@ -10,7 +10,7 @@ import TestimonialCard from '../components/common/TestimonialCard';
 import { useSettings } from '../contexts/SettingsContext';
 import { useFetchData } from '../hooks/useFetchData';
 import { serviceService, testimonialService } from '../services';
-import { defaultImmigrationServices, defaultEducationServices, defaultTestimonials } from '../data/defaults';
+import { defaultImmigrationServices, defaultEducationServices, defaultTestimonials, defaultProcessSteps, defaultFaqs } from '../data/defaults';
 
 // Icons for services
 const ImmigrationIcon = () => (
@@ -40,11 +40,13 @@ const ScholarshipIcon = () => (
 );
 
 const HomePage = () => {
-  const { differentiator, ctaSection } = useSettings();
+  const { differentiator, ctaSection, processSteps, faqs } = useSettings();
 
   const [trustRef, isTrustVisible] = useInView({ threshold: 0.2 });
+  const [processRef, isProcessVisible] = useInView({ threshold: 0.2 });
   const [immigrationRef, isImmigrationVisible] = useInView({ threshold: 0.2 });
   const [educationRef, isEducationVisible] = useInView({ threshold: 0.2 });
+  const [faqRef, isFaqVisible] = useInView({ threshold: 0.2 });
   const [testimonialRef, isTestimonialVisible] = useInView({ threshold: 0.2 });
   const [ctaRef, isCtaVisible] = useInView({ threshold: 0.2 });
   const [blogRef, isBlogVisible] = useInView({ threshold: 0.2 });
@@ -75,6 +77,12 @@ const HomePage = () => {
     link: `/services/${service.slug}` || service.link,
     badge: service.badge
   });
+
+  // Get process steps with fallback
+  const displayProcessSteps = processSteps?.length > 0 ? processSteps : defaultProcessSteps;
+
+  // Get FAQs with fallback
+  const displayFaqs = faqs?.length > 0 ? faqs : defaultFaqs;
 
   const trustStats = [
     { value: '500+', label: 'Families Settled' },
@@ -123,6 +131,55 @@ const HomePage = () => {
               <div className="mt-4 h-1 w-0 bg-gradient-to-r from-primary-blue to-primary-red transition-all duration-300 group-hover:w-full mx-auto" />
             </div>
           ))}
+        </div>
+      </Section>
+
+      {/* How It Works - Process Steps */}
+      <Section>
+        <div className="text-center mb-12">
+          <span className="inline-block text-primary-red font-medium mb-2 uppercase tracking-wide text-sm">
+            Our Process
+          </span>
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
+            How It Works
+          </h2>
+          <p className="text-text-muted text-lg max-w-2xl mx-auto">
+            Your journey to Canada in 5 simple steps
+          </p>
+        </div>
+
+        <div ref={processRef} className="max-w-4xl mx-auto">
+          <div className="relative">
+            {/* Connecting line */}
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-blue via-primary-red to-secondary-green hidden md:block" />
+
+            {displayProcessSteps.map((step, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-6 mb-8 last:mb-0 group"
+                style={{
+                  opacity: isProcessVisible ? 1 : 0,
+                  transform: isProcessVisible ? 'translateX(0)' : 'translateX(-30px)',
+                  transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.15}s`
+                }}
+              >
+                {/* Step number */}
+                <div className="relative z-10 w-16 h-16 bg-white rounded-full shadow-card flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-card-hover">
+                  <span className="text-2xl font-heading font-bold text-primary-blue">{step.number || index + 1}</span>
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 bg-secondary-gray rounded-xl p-6 transition-all duration-300 group-hover:shadow-card group-hover:-translate-y-1">
+                  <h3 className="text-xl font-heading font-semibold text-primary-blue mb-2 transition-colors group-hover:text-primary-red">
+                    {step.title}
+                  </h3>
+                  <p className="text-text-muted">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </Section>
 
@@ -238,6 +295,64 @@ const HomePage = () => {
           ))}
         </div>
       </SectionLayout>
+
+      {/* FAQs Section */}
+      <Section background="gray">
+        <div className="text-center mb-12">
+          <span className="inline-block text-primary-red font-medium mb-2 uppercase tracking-wide text-sm">
+            FAQs
+          </span>
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-text-muted text-lg max-w-2xl mx-auto">
+            Get answers to common questions about immigration and education
+          </p>
+        </div>
+
+        <div ref={faqRef} className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {displayFaqs.slice(0, 6).map((faq, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-6 shadow-card hover:shadow-card-hover transition-all duration-300 group"
+                style={{
+                  opacity: isFaqVisible ? 1 : 0,
+                  transform: isFaqVisible ? 'translateY(0)' : 'translateY(30px)',
+                  transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary-blue/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1 transition-all duration-300 group-hover:bg-primary-blue">
+                    <svg className="w-4 h-4 text-primary-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-text-dark mb-2 transition-colors group-hover:text-primary-blue">
+                      {faq.question}
+                    </h4>
+                    <p className="text-text-muted text-sm leading-relaxed">
+                      {faq.answer}
+                    </p>
+                    {faq.category && (
+                      <span className="inline-block mt-3 px-2 py-1 bg-secondary-gray text-xs font-medium text-primary-blue rounded">
+                        {faq.category.charAt(0).toUpperCase() + faq.category.slice(1)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Button to="/faq" variant="secondary" className="hover-lift">
+              View All FAQs
+            </Button>
+          </div>
+        </div>
+      </Section>
 
       {/* Testimonials */}
       <Section background="gray">

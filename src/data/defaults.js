@@ -71,6 +71,21 @@ export const defaultSettings = {
     { name: 'CAPIC', description: 'Canadian Association of Professional Immigration Consultants' },
     { name: 'CSIC', description: 'Canadian Society of Immigration Consultants' }
   ],
+  processSteps: [
+    { number: 1, title: 'Free Consultation', description: 'Share your goals with us. We assess your eligibility and recommend the best pathway for your unique situation.' },
+    { number: 2, title: 'Personalized Strategy', description: 'Our experts create a tailored immigration or education plan designed specifically for your needs and timeline.' },
+    { number: 3, title: 'Document Preparation', description: 'We guide you through every document, ensuring accuracy and completeness for a successful application.' },
+    { number: 4, title: 'Application Submission', description: 'Your application is professionally prepared and submitted. We handle the complexity so you can focus on your journey.' },
+    { number: 5, title: 'Ongoing Support', description: 'From approval to arrival, we provide continuous guidance for settlement, education, and career success.' }
+  ],
+  faqs: [
+    { question: 'How long does the immigration process take?', answer: 'Processing times vary by program. Express Entry typically takes 6-8 months, while Provincial Nominee Programs may take 12-18 months. We provide realistic timelines during your consultation.', category: 'immigration' },
+    { question: 'What are the costs for immigration services?', answer: 'Our fees vary based on the complexity of your case. We offer transparent pricing with no hidden costs. Book a free consultation to receive a personalized quote.', category: 'immigration' },
+    { question: 'Do you help with student visas?', answer: 'Yes! We specialize in student visas and university admissions. Our education consultants help with program selection, application, and study permit processing.', category: 'education' },
+    { question: 'Can you help if my application was refused?', answer: 'Absolutely. We have extensive experience with refusal cases. Our team analyzes the refusal reasons and creates a strong strategy for reapplication or appeal.', category: 'immigration' },
+    { question: 'What makes Voie Canada different?', answer: 'We specialize in inclusive education for students with learning challenges and provide personalized immigration strategies. Our unique expertise sets us apart from generic consultancies.', category: 'general' },
+    { question: 'Do you offer services in languages other than English?', answer: 'Yes, our team provides services in multiple languages including Hindi, Punjabi, French, and others. We ensure clear communication throughout your journey.', category: 'general' }
+  ],
   ctaSection: {
     headline: 'Start Your Canadian Journey Today',
     description: 'Take the first step towards your Canadian dream. Get a free assessment or book a consultation with our experts.',
@@ -391,5 +406,66 @@ export const defaultTeamMembers = [
     title: 'Student Advisor',
     bio: 'Specializes in supporting students with learning challenges and unique needs.',
     image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80'
+  }
+];
+
+export const defaultProcessSteps = [
+  {
+    number: 1,
+    title: 'Free Consultation',
+    description: 'Share your goals with us. We assess your eligibility and recommend the best pathway for your unique situation.'
+  },
+  {
+    number: 2,
+    title: 'Personalized Strategy',
+    description: 'Our experts create a tailored immigration or education plan designed specifically for your needs and timeline.'
+  },
+  {
+    number: 3,
+    title: 'Document Preparation',
+    description: 'We guide you through every document, ensuring accuracy and completeness for a successful application.'
+  },
+  {
+    number: 4,
+    title: 'Application Submission',
+    description: 'Your application is professionally prepared and submitted. We handle the complexity so you can focus on your journey.'
+  },
+  {
+    number: 5,
+    title: 'Ongoing Support',
+    description: 'From approval to arrival, we provide continuous guidance for settlement, education, and career success.'
+  }
+];
+
+export const defaultFaqs = [
+  {
+    question: 'How long does the immigration process take?',
+    answer: 'Processing times vary by program. Express Entry typically takes 6-8 months, while Provincial Nominee Programs may take 12-18 months. We provide realistic timelines during your consultation.',
+    category: 'immigration'
+  },
+  {
+    question: 'What are the costs for immigration services?',
+    answer: 'Our fees vary based on the complexity of your case. We offer transparent pricing with no hidden costs. Book a free consultation to receive a personalized quote.',
+    category: 'immigration'
+  },
+  {
+    question: 'Do you help with student visas?',
+    answer: 'Yes! We specialize in student visas and university admissions. Our education consultants help with program selection, application, and study permit processing.',
+    category: 'education'
+  },
+  {
+    question: 'Can you help if my application was refused?',
+    answer: 'Absolutely. We have extensive experience with refusal cases. Our team analyzes the refusal reasons and creates a strong strategy for reapplication or appeal.',
+    category: 'immigration'
+  },
+  {
+    question: 'What makes Voie Canada different?',
+    answer: 'We specialize in inclusive education for students with learning challenges and provide personalized immigration strategies. Our unique expertise sets us apart from generic consultancies.',
+    category: 'general'
+  },
+  {
+    question: 'Do you offer services in languages other than English?',
+    answer: 'Yes, our team provides services in multiple languages including Hindi, Punjabi, French, and others. We ensure clear communication throughout your journey.',
+    category: 'general'
   }
 ];

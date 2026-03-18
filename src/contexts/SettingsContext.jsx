@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { settingsService } from '../services';
-import { defaultSettings } from '../data/defaults';
+import { defaultSettings, defaultProcessSteps, defaultFaqs } from '../data/defaults';
 
 const SettingsContext = createContext(null);
 
@@ -46,7 +46,9 @@ export const SettingsProvider = ({ children }) => {
     socialLinks: settings.socialLinks,
     certifications: settings.certifications?.length > 0 ? settings.certifications : defaultSettings.certifications,
     ctaSection: settings.ctaSection,
-    footer: settings.footer
+    footer: settings.footer,
+    processSteps: settings.processSteps?.length > 0 ? settings.processSteps : defaultProcessSteps,
+    faqs: settings.faqs?.length > 0 ? settings.faqs : defaultFaqs
   };
 
   return (
