@@ -194,9 +194,9 @@ const SuccessStoriesPage = () => {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80"
+                src="https://theforage.wpengine.com/wp-content/uploads/2024/03/client-services-e1709741837781.jpg"
                 alt="Success story"
-                className="w-full h-80 object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-80 object-fit rounded-xl transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute -bottom-4 -right-4 bg-primary-blue text-white p-4 rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105">
                 <div className="text-sm font-medium">Journey</div>

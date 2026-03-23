@@ -327,7 +327,7 @@ const ResourcesPage = () => {
       </Section>
 
       {/* Newsletter */}
-      <Section background="blue">
+      <Section background="gray">
         <div
           ref={newsletterRef}
           className="text-center max-w-xl mx-auto"
@@ -337,17 +337,17 @@ const ResourcesPage = () => {
             transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
-          <h2 className="text-3xl font-heading font-bold text-white mb-4">
+          <h2 className="text-3xl font-heading font-bold text-black mb-4">
             Stay Updated
           </h2>
-          <p className="text-white/80 mb-6">
+          <p className="text-black mb-6">
             Subscribe to our newsletter for the latest immigration updates, education news, and exclusive resources.
           </p>
           <form className="flex flex-col sm:flex-row gap-4">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-grow px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-white focus:ring-2 focus:ring-white/20 transition-all"
+              className="flex-grow px-6 py-3 rounded-lg bg-white/10 border border-black text-black placeholder-black focus:outline-none focus:border-white focus:ring-2 focus:ring-white/20 transition-all"
             />
             <Button variant="gold" size="md" className="hover-lift">
               Subscribe

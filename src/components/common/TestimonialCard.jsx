@@ -66,7 +66,7 @@ const TestimonialCard = ({
 
       {/* Author Info */}
       <div className="relative flex items-center">
-        {photo ? (
+        {/* {photo ? (
           <div className="relative mr-4">
             <img
               src={photo}
@@ -92,7 +92,7 @@ const TestimonialCard = ({
               </span>
             )}
           </div>
-        )}
+        )} */}
 
         <div className="flex-grow">
           <h4 className="font-heading font-semibold text-text-dark transition-colors duration-300 hover:text-primary-blue">

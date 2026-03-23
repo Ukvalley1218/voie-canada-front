@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from '../ui/Button';
+import logo from '../../assets/logo.png'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,20 +73,7 @@ const Navbar = () => {
             onMouseEnter={() => setActiveDropdown(null)}
           >
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-red rounded-lg flex items-center justify-center mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
-                <span className="text-white font-heading font-bold text-xl">V</span>
-              </div>
-              <div className="relative overflow-hidden">
-                <span className="font-heading font-bold text-xl text-primary-blue inline-block transition-transform duration-300 group-hover:-translate-y-full">
-                  Voie
-                </span>
-                <span className="absolute inset-0 font-heading font-bold text-xl text-primary-blue translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  Voie
-                </span>
-                <span className="font-heading font-bold text-xl text-primary-red ml-1">
-                  Canada
-                </span>
-              </div>
+             <img src={logo} alt="VOIE LOGO IMG"  className='w-auto h-12 '/>
             </div>
           </Link>
 

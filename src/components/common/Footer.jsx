@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Container from '../ui/Container';
 import { useState } from 'react';
 import { useSettings } from '../../contexts/SettingsContext';
+import logo from '../../assets/footer-logo.png'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -107,13 +108,10 @@ const Footer = () => {
             {/* Company Info */}
             <div className="lg:col-span-1">
               <Link to="/" className="flex items-center mb-4 group">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3 transition-transform duration-300 group-hover:scale-110">
-                  <span className="text-primary-blue font-heading font-bold text-xl">V</span>
+                <div className="w-auto h-14 flex items-center justify-center mr-3 transition-transform duration-300 group-hover:scale-110">
+                  <img src={logo} alt="VOIE LOGO IMG"  className='w-auto h-14 '/>
                 </div>
-                <div>
-                  <span className="font-heading font-bold text-xl text-white">Voie</span>
-                  <span className="font-heading font-bold text-xl text-accent-gold ml-1">Canada</span>
-                </div>
+                
               </Link>
               <p className="text-white/80 mb-4 leading-relaxed">
                 {footer?.aboutText || 'Your trusted partner for Canadian immigration and education services. Helping professionals, entrepreneurs, and students achieve their Canadian dream.'}

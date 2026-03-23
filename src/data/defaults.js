@@ -1,14 +1,21 @@
 // Default fallback data for when API is unavailable or has no data
-
+import heroimg from '../assets/hero.webp'
 export const defaultSettings = {
   siteName: 'Voie Canada',
   siteTagline: 'Your Pathway to Canada',
   logo: '',
   hero: {
+    badge: {
+      text: 'IMMIGRATION CANADA',
+      icon: 'flag'
+    },
     headline: 'Your Pathway to Canada',
     subheadline: 'Immigration & Education Made Personal',
-    description: 'Helping professionals, entrepreneurs, and students achieve their Canadian dream.',
-    backgroundImage: '',
+    description: 'Helping professionals, entrepreneurs, and students achieve their Canadian dream with personalized guidance and expert support.',
+    backgroundImage: heroimg,
+    overlayOpacity: 0.75,
+    overlayDirection: 'left',
+    textPosition: 'left',
     primaryCTA: {
       text: 'Explore Immigration Options',
       link: '/immigration'
@@ -16,7 +23,13 @@ export const defaultSettings = {
     secondaryCTA: {
       text: 'Discover Education Programs',
       link: '/education'
-    }
+    },
+    showStats: true,
+    stats: [
+      { value: '500+', label: 'Families Settled' },
+      { value: '300+', label: 'Students Admitted' },
+      { value: '95%', label: 'Success Rate' }
+    ]
   },
   trustStats: [
     { number: '500+', label: 'Families Settled', icon: 'users' },
@@ -101,6 +114,131 @@ export const defaultSettings = {
   footer: {
     aboutText: 'Your trusted partner for Canadian immigration and education services. Helping professionals, entrepreneurs, and students achieve their Canadian dream.',
     copyrightText: '© {year} Voie Canada. All rights reserved.'
+  },
+
+  // Homepage Sections - Dynamic sections for the homepage
+  homepageSections: [
+    {
+      id: 'study-canada',
+      type: 'image-content',
+      title: 'Study in Canada',
+      subtitle: 'Education Pathways',
+      description: 'Canada hosts over 800,000 international students annually, offering world-class education at globally ranked institutions. We guide you through every step—from program selection to visa approval and beyond.',
+      image: 'https://santamonicaedu.in/wp-content/uploads/2023/03/blog-3-1.jpg.webp',
+      imageAlt: 'International students studying in Canada',
+      points: [
+        { title: 'Top Universities', description: 'Access to world-renowned institutions', icon: 'academic' },
+        { title: 'Work Opportunities', description: 'Post-graduation work permits available', icon: 'work' },
+        { title: 'Pathway to PR', description: 'Education leads to permanent residency', icon: 'passport' }
+      ],
+      cta: {
+        primary: { text: 'Explore Programs', link: '/education' },
+        secondary: { text: 'Talk to an Advisor', link: '/contact' }
+      },
+      backgroundColor: 'white',
+      order: 1,
+      isActive: true
+    },
+    {
+      id: 'immigration-made-easy',
+      type: 'content-image',
+      title: 'Immigration Made Easy',
+      subtitle: 'Your Journey Starts Here',
+      description: 'Navigating Canadian immigration can be complex. Our RCIC-certified consultants simplify the process, ensuring your application has the best chance of success. From Express Entry to Provincial Nominee Programs, we handle it all.',
+      image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80',
+      imageAlt: 'Canadian immigration documents',
+      points: [
+        { title: 'Express Entry', description: 'Fast-track your PR application', icon: 'rocket' },
+        { title: 'Provincial Programs', description: 'Explore PNPs across Canada', icon: 'map' },
+        { title: 'Family Sponsorship', description: 'Reunite with loved ones', icon: 'heart' }
+      ],
+      cta: {
+        primary: { text: 'Get Started', link: '/immigration' },
+        secondary: { text: 'Free Assessment', link: '/assessment' }
+      },
+      backgroundColor: 'gray',
+      order: 2,
+      isActive: true
+    },
+    {
+      id: 'entrepreneur-pathway',
+      type: 'image-content',
+      title: 'Entrepreneur & Startup Visa',
+      subtitle: 'Business Immigration',
+      description: 'Build your business in Canada. Our startup visa program helps entrepreneurs launch innovative ventures with access to venture capital, incubators, and a pathway to permanent residency.',
+      image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80',
+      imageAlt: 'Business entrepreneurs in Canada',
+      points: [
+        { title: 'Startup Visa', description: 'Launch your innovative business', icon: 'lightbulb' },
+        { title: 'Investor Programs', description: 'Invest and immigrate', icon: 'chart' },
+        { title: 'Business Setup', description: 'Complete support from idea to launch', icon: 'briefcase' }
+      ],
+      cta: {
+        primary: { text: 'Explore Immigration', link: '/immigration/startup-visa' },
+        secondary: { text: 'Consult an Expert', link: '/contact' }
+      },
+      backgroundColor: 'white',
+      order: 3,
+      isActive: true
+    },
+    // {
+    //   id: 'inclusive-education',
+    //   type: 'content-image',
+    //   title: 'Inclusive Education Support',
+    //   subtitle: 'Specialized Programs',
+    //   description: 'Every student deserves the opportunity to succeed. We specialize in finding the right educational environment for students with learning challenges, special needs, and unique requirements.',
+    //   image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80',
+    //   imageAlt: 'Student receiving personalized education support',
+    //   points: [
+    //     { title: 'Needs Assessment', description: 'Understanding your unique requirements', icon: 'clipboard' },
+    //     { title: 'School Matching', description: 'Finding schools with proper support', icon: 'search' },
+    //     { title: 'Ongoing Guidance', description: 'Support throughout your journey', icon: 'support' }
+    //   ],
+    //   cta: {
+    //     primary: { text: 'Learn More', link: '/education/specialized-programs' },
+    //     secondary: { text: 'Contact Us', link: '/contact' }
+    //   },
+    //   backgroundColor: 'gray',
+    //   order: 4,
+    //   isActive: true
+    // }
+  ],
+
+  // Enhanced Stats Section
+  statsSection: {
+    title: 'Trusted by Hundreds of Families',
+    subtitle: 'Our track record speaks for itself',
+    backgroundColor: 'gray',
+    stats: [
+      { number: '500+', label: 'Families Settled', icon: 'users', description: 'Successfully helped families relocate to Canada' },
+      { number: '300+', label: 'Students Admitted', icon: 'graduation', description: 'Students placed in top Canadian institutions' },
+      { number: '95%', label: 'Success Rate', icon: 'check', description: 'High approval rate for applications' },
+      { number: '50+', label: 'Countries Served', icon: 'globe', description: 'Clients from around the world' }
+    ]
+  },
+
+  // Testimonials Section Settings
+  testimonialsSection: {
+    title: 'Success Stories',
+    subtitle: 'Real Journeys. Real Success.',
+    description: 'From visa approvals to inclusive education placements, we make every journey possible.',
+    backgroundColor: 'gray'
+  },
+
+  // CTA Banner
+  ctaBanner: {
+    headline: 'Start Your Canadian Journey Today',
+    description: 'Take the first step towards your Canadian dream. Get a free assessment or book a consultation with our experts.',
+    backgroundImage: 'https://i0.wp.com/calmatters.org/wp-content/uploads/2025/06/050625-TurnitinAICollege-JAH-CM-02.jpg?resize=1536%2C1024&ssl=1',
+    backgroundColor: 'blue',
+    primaryButton: {
+      text: 'Free Assessment',
+      link: '/assessment'
+    },
+    secondaryButton: {
+      text: 'Book Consultation',
+      link: '/contact'
+    }
   }
 };
 

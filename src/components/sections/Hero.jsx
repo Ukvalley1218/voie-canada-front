@@ -1,107 +1,186 @@
 import { Link } from 'react-router-dom';
 import Container from '../ui/Container';
+import heroimg from '../../assets/hero.webp'
 import Button from '../ui/Button';
-import AnimatedSection, { AnimatedCounter } from '../common/AnimatedSection';
-import AnimatedCard from '../common/AnimatedCard';
+import AnimatedSection from '../common/AnimatedSection';
 import { useSettings } from '../../contexts/SettingsContext';
+
+
+// Default background image (consistent with defaults.js)
+const DEFAULT_BG_IMAGE = heroimg;
+
+// Icon mapping for badge
+const BadgeIcon = ({ icon }) => {
+  const icons = {
+    flag: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+      </svg>
+    ),
+    globe: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    star: (
+      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+    ),
+    check: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    )
+  };
+  return icons[icon] || icons.flag;
+};
 
 const Hero = () => {
   const { hero, trustStats, loading } = useSettings();
 
-  // Fallback stats if trustStats not available
-  const displayStats = trustStats?.length > 0
-    ? trustStats.slice(0, 3).map(stat => ({
-        number: stat.number?.replace(/[^0-9]/g, '') || stat.number,
-        suffix: stat.number?.replace(/[0-9]/g, '') || '',
+  // Show loading skeleton while settings load
+  if (loading) {
+    return (
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-primary-blue">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
+        <div className="relative z-10 w-full min-h-screen flex items-center py-20 lg:py-0">
+          <div className="container-custom">
+            <div className="max-w-2xl">
+              {/* Badge skeleton */}
+              <div className="animate-pulse bg-white/20 h-8 w-48 rounded-full mb-6" />
+              {/* Headline skeleton */}
+              <div className="animate-pulse bg-white/20 h-12 w-96 rounded mb-4" />
+              <div className="animate-pulse bg-white/20 h-8 w-80 rounded mb-3" />
+              <div className="animate-pulse bg-white/20 h-6 w-full max-w-lg rounded mb-8" />
+              {/* Buttons skeleton */}
+              <div className="flex gap-4 mb-10">
+                <div className="animate-pulse bg-white/20 h-12 w-48 rounded-lg" />
+                <div className="animate-pulse bg-white/20 h-12 w-48 rounded-lg" />
+              </div>
+              {/* Stats skeleton */}
+              <div className="flex gap-8">
+                <div className="animate-pulse bg-white/20 h-16 w-24 rounded" />
+                <div className="animate-pulse bg-white/20 h-16 w-24 rounded" />
+                <div className="animate-pulse bg-white/20 h-16 w-24 rounded" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Default stats
+  const displayStats = hero?.stats?.length > 0
+    ? hero.stats
+    : trustStats?.slice(0, 3).map(stat => ({
+        value: stat.number,
         label: stat.label
-      }))
-    : [
-        { number: '500', suffix: '+', label: 'Families Settled' },
-        { number: '300', suffix: '+', label: 'Students Admitted' },
-        { number: '95', suffix: '%', label: 'Success Rate' }
+      })) || [
+        { value: '500+', label: 'Families Settled' },
+        { value: '300+', label: 'Students Admitted' },
+        { value: '95%', label: 'Success Rate' }
       ];
 
-  // Extract hero content with fallbacks
+  // Extract hero content - use consistent fallback
+  const badge = hero?.badge || { text: 'IMMIGRATION CANADA', icon: 'flag' };
   const headline = hero?.headline || 'Your Pathway to Canada';
   const subheadline = hero?.subheadline || 'Immigration & Education Made Personal';
   const description = hero?.description || 'Helping professionals, entrepreneurs, and students achieve their Canadian dream with personalized guidance and expert support.';
+  const backgroundImage = hero?.backgroundImage || DEFAULT_BG_IMAGE;
+  const overlayOpacity = hero?.overlayOpacity ?? 0.85;
+  const showStats = hero?.showStats !== false;
   const primaryCTA = hero?.primaryCTA || { text: 'Explore Immigration Options', link: '/immigration' };
   const secondaryCTA = hero?.secondaryCTA || { text: 'Discover Education Programs', link: '/education' };
 
   return (
-    <section className="relative min-h-screen flex items-center gradient-hero overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
+    <section className="relative flex items-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={backgroundImage}
+          alt="Canada landscape"
+          className="w-full h-full object-cover"
+        />
       </div>
 
-      {/* Background Image if available */}
-      {hero?.backgroundImage && (
-        <div className="absolute inset-0">
-          <img
-            src={hero.backgroundImage || "https://www.mivisaconsultant.com/wp-content/uploads/2022/02/2104241316386919-1.jpg"}
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-        </div>
-      )}
+      {/* Black Gradient Overlay from Left */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(to right,
+            rgba(0, 0, 0, ${overlayOpacity}) 0%,
+            rgba(0, 0, 0, ${overlayOpacity * 0.9}) 20%,
+            rgba(0, 0, 0, ${overlayOpacity * 0.7}) 40%,
+            rgba(0, 0, 0, ${overlayOpacity * 0.4}) 55%,
+            rgba(0, 0, 0, 0.1) 75%,
+            transparent 100%)`
+        }}
+      />
 
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl animate-float-delayed"></div>
-        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-pulse-soft"></div>
-      </div>
+      {/* Secondary color tint overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(to right,
+            rgba(30, 58, 138, 0.3) 0%,
+            rgba(30, 58, 138, 0.2) 30%,
+            transparent 60%)`
+        }}
+      />
 
-      <Container className="relative z-10 pt-24 lg:pt-32 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="text-white text-center lg:text-left">
-            {/* Badge with animation */}
+      {/* Content Container - Left Aligned */}
+      <div className="relative z-10 w-full lg:min-h-[90vh] flex items-center py-20 lg:py-0">
+        <div className="lg:ml-0 container-custom">
+          <div className="text-left max-w-2xl">
+            {/* Badge */}
             <AnimatedSection animation="fade-in-down" delay={100}>
-              <div className="inline-flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 hover:bg-white/20 transition-colors duration-300">
-                <span className="w-2 h-2 bg-accent-gold rounded-full mr-2 animate-pulse"></span>
-                <span className="text-sm font-medium">ICCRC Certified Consultants</span>
+              <div className="inline-flex items-center gap-2 bg-accent-gold/20 backdrop-blur-sm border border-accent-gold/40 px-4 py-2 rounded-full mb-6">
+                <span className="text-accent-gold">
+                  <BadgeIcon icon={badge.icon} />
+                </span>
+                <span className="text-white text-sm font-medium tracking-wide">{badge.text}</span>
               </div>
             </AnimatedSection>
 
             {/* Headline */}
             <AnimatedSection animation="fade-in-up" delay={200}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight mb-6">
-                {headline.split('Canada')[0]}
-                {headline.includes('Canada') && (
-                  <span className="text-accent-gold relative">
-                    Canada
-                    <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 10" fill="none">
-                      <path d="M0 8C50 2 150 2 200 8" stroke="currentColor" strokeWidth="2" className="text-accent-gold/30" />
-                    </svg>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold text-white leading-tight mb-4">
+                {headline.split(' ').map((word, idx, arr) => (
+                  <span key={idx}>
+                    {word.toLowerCase().includes('canada') ? (
+                      <span className="text-accent-gold">{word}</span>
+                    ) : (
+                      word
+                    )}
+                    {idx < arr.length - 1 ? ' ' : ''}
                   </span>
-                )}
-                {headline.split('Canada')[1]}
+                ))}
               </h1>
             </AnimatedSection>
 
+            {/* Subheadline */}
             <AnimatedSection animation="fade-in-up" delay={300}>
-              <p className="text-lg md:text-xl text-white/90 mb-4 leading-relaxed">
+              <p className="text-xl md:text-2xl text-white font-light mb-3">
                 {subheadline}
               </p>
             </AnimatedSection>
 
+            {/* Description */}
             <AnimatedSection animation="fade-in-up" delay={400}>
-              <p className="text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-white/80 text-lg mb-8 max-w-lg">
                 {description}
               </p>
             </AnimatedSection>
 
             {/* CTA Buttons */}
             <AnimatedSection animation="fade-in-up" delay={500}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
-                <Button to={primaryCTA.link} variant="gold" size="lg" className="hover-shine">
+              <div className="flex flex-col sm:flex-row gap-4 mb-10">
+                <Button to={primaryCTA.link} variant="gold" size="sm" className="hover-lift group">
                   <span className="flex items-center">
                     {primaryCTA.text}
-                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </span>
@@ -110,7 +189,7 @@ const Hero = () => {
                   to={secondaryCTA.link}
                   variant="secondary"
                   size="lg"
-                  className="!bg-white/10 !border-white !text-white hover:!bg-white hover:!text-primary-blue transition-all duration-300"
+                  className="!bg-white/10 !border-white/50 !text-white hover:!bg-white hover:!text-primary-blue transition-all duration-300 hover-lift"
                 >
                   {secondaryCTA.text}
                 </Button>
@@ -118,77 +197,32 @@ const Hero = () => {
             </AnimatedSection>
 
             {/* Stats */}
-            <AnimatedSection animation="fade-in-up" delay={600}>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-8">
-                {displayStats.map((stat, index) => (
-                  <div
-                    key={index}
-                    className="text-center lg:text-left transform transition-all duration-300 hover:scale-105"
-                  >
-                    <div className="text-3xl md:text-4xl font-heading font-bold text-accent-gold">
-                      <AnimatedCounter
-                        end={parseInt(stat.number) || 0}
-                        suffix={stat.suffix}
-                        duration={2000}
-                        delay={index * 200}
-                      />
-                    </div>
-                    <div className="text-sm text-white/70">{stat.label}</div>
-                  </div>
-                ))}
+            {showStats && (
+              <div className="flex flex-wrap gap-8">
+                {displayStats.map((stat, index) => {
+                  // Different animations for each stat
+                  const animations = ['scale-up', 'fade-in-left', 'scale-up'];
+                  const delays = [600, 750, 900];
+                  return (
+                    <AnimatedSection
+                      key={index}
+                      animation={animations[index % animations.length]}
+                      delay={delays[index % delays.length]}
+                    >
+                      <div className="text-left">
+                        <div className="text-3xl md:text-4xl font-heading font-bold text-white mb-1">
+                          {stat.value}
+                        </div>
+                        <div className="text-white/70 text-sm">{stat.label}</div>
+                      </div>
+                    </AnimatedSection>
+                  );
+                })}
               </div>
-            </AnimatedSection>
-          </div>
-
-          {/* Image / Visual */}
-          <div className="hidden lg:block relative">
-            <AnimatedSection animation="fade-in-right" delay={400}>
-              <div className="relative">
-                {/* Main Image Container */}
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02]">
-                  <img
-                    src={hero?.backgroundImage || "https://www.mivisaconsultant.com/wp-content/uploads/2022/02/2104241316386919-1.jpg"}
-                    alt="Canadian landscape"
-                    className="w-full h-[500px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-blue/50 to-transparent"></div>
-                </div>
-
-                {/* Floating Cards with animations */}
-                <AnimatedSection animation="scale-in" delay={700}>
-                  <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-4 w-64 hover:shadow-2xl transition-shadow duration-300 animate-float">
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 bg-secondary-green/10 rounded-full flex items-center justify-center mr-3">
-                        <svg className="w-6 h-6 text-secondary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-text-dark">Visa Approved</div>
-                        <div className="text-xs text-text-muted">Express Entry Success</div>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-
-                <AnimatedSection animation="scale-in" delay={800}>
-                  <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-xl p-4 hover:shadow-2xl transition-shadow duration-300 animate-float-delayed">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-accent-gold/10 rounded-full flex items-center justify-center mr-3">
-                        <span className="text-lg">🎓</span>
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-text-dark">Top Universities</div>
-                        <div className="text-xs text-text-muted">Admission Support</div>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              </div>
-            </AnimatedSection>
+            )}
           </div>
         </div>
-      </Container>
+      </div>
 
       {/* Scroll Indicator */}
       <AnimatedSection animation="fade-in" delay={1000}>

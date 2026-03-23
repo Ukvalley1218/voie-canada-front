@@ -243,7 +243,7 @@ const ImmigrationPage = () => {
             }}
           >
             <img
-              src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
+              src="https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png"
               alt="Immigration consultation"
               className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -253,7 +253,7 @@ const ImmigrationPage = () => {
       </Section>
 
       {/* CTA */}
-      <Section background="blue">
+      <Section background="gray">
         <div
           ref={ctaRef}
           className="text-center"
@@ -263,17 +263,17 @@ const ImmigrationPage = () => {
             transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-black mb-4">
             Check Your Eligibility Today
           </h2>
-          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-black text-lg mb-8 max-w-2xl mx-auto">
             Get a free assessment to discover the best immigration pathway for your Canadian dream.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button to="/assessment" variant="gold" size="lg" className="hover-lift">
               Free Assessment
             </Button>
-            <Button to="/contact" variant="secondary" size="lg" className="!bg-white/10 !border-white !text-white hover:!bg-white hover:!text-primary-blue hover-lift">
+            <Button to="/contact" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
               Book Consultation
             </Button>
           </div>

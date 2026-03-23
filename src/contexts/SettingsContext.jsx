@@ -48,7 +48,12 @@ export const SettingsProvider = ({ children }) => {
     ctaSection: settings.ctaSection,
     footer: settings.footer,
     processSteps: settings.processSteps?.length > 0 ? settings.processSteps : defaultProcessSteps,
-    faqs: settings.faqs?.length > 0 ? settings.faqs : defaultFaqs
+    faqs: settings.faqs?.length > 0 ? settings.faqs : defaultFaqs,
+    // New homepage sections
+    homepageSections: settings.homepageSections?.length > 0 ? settings.homepageSections : defaultSettings.homepageSections,
+    statsSection: settings.statsSection || defaultSettings.statsSection,
+    testimonialsSection: settings.testimonialsSection || defaultSettings.testimonialsSection,
+    ctaBanner: settings.ctaBanner || defaultSettings.ctaBanner
   };
 
   return (

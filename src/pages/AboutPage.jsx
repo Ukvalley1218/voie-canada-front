@@ -288,7 +288,7 @@ const AboutPage = () => {
       </Section>
 
       {/* CTA */}
-      <Section background="blue">
+      <Section background="gray">
         <div
           ref={ctaRef}
           className="text-center"
@@ -298,17 +298,17 @@ const AboutPage = () => {
             transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-black mb-4">
             Ready to Start Your Journey?
           </h2>
-          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-black text-lg mb-8 max-w-2xl mx-auto">
             Let our experienced team guide you through your Canadian immigration or education journey.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button to="/contact" variant="gold" size="lg" className="hover-lift">
               Book Consultation
             </Button>
-            <Button to="/assessment" variant="secondary" size="lg" className="!bg-white/10 !border-white !text-white hover:!bg-white hover:!text-primary-blue hover-lift">
+            <Button to="/assessment" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
               Free Assessment
             </Button>
           </div>
