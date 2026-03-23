@@ -116,7 +116,7 @@ const HomePage = () => {
           description="Canada offers over 80 immigration pathways. We help you choose the right one for your unique situation."
         />
 
-        <div ref={immigrationRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div ref={immigrationRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {immigrationServices.slice(0, 3).map((service, index) => (
             <div
               key={service._id || index}
@@ -153,7 +153,7 @@ const HomePage = () => {
           description="Inclusive education support from admissions to graduation. We specialize in helping students with unique needs."
         />
 
-        <div ref={educationRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div ref={educationRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {educationServices.slice(0, 3).map((service, index) => (
             <div
               key={service._id || index}
@@ -192,8 +192,8 @@ const HomePage = () => {
         />
 
         <div ref={processRef} className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 relative">
-            {/* Connecting line - hidden on mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8 relative">
+            {/* Connecting line - hidden on smaller screens */}
             <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-primary-blue via-primary-red to-secondary-green" />
 
             {displayProcessSteps.map((step, index) => (
@@ -207,14 +207,14 @@ const HomePage = () => {
                 }}
               >
                 {/* Step number circle */}
-                <div className="relative z-10 w-20 h-20 bg-white rounded-full shadow-card flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-card-hover">
-                  <span className="text-3xl font-heading font-bold text-primary-blue">{step.number || index + 1}</span>
+                <div className="relative z-10 w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 bg-white rounded-full shadow-card flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-card-hover">
+                  <span className="text-2xl sm:text-3xl font-heading font-bold text-primary-blue">{step.number || index + 1}</span>
                 </div>
 
-                <h3 className="text-base font-heading font-semibold text-primary-blue mb-2 text-center transition-colors group-hover:text-primary-red min-h-[2.5rem]">
+                <h3 className="text-sm sm:text-base font-heading font-semibold text-primary-blue mb-1 sm:mb-2 text-center transition-colors group-hover:text-primary-red min-h-[2rem] sm:min-h-[2.5rem]">
                   {step.title}
                 </h3>
-                <p className="text-text-muted text-sm leading-relaxed text-center">
+                <p className="text-text-muted text-xs sm:text-sm leading-relaxed text-center px-2">
                   {step.description}
                 </p>
               </div>
@@ -225,10 +225,10 @@ const HomePage = () => {
 
       {/* Why Choose Us - Enhanced */}
       <Section background="gray">
-        <div ref={whyChooseRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div ref={whyChooseRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image Side */}
           <div
-            className="relative"
+            className="relative order-2 lg:order-1"
             style={{
               opacity: isWhyChooseVisible ? 1 : 0,
               transform: isWhyChooseVisible ? 'translateX(0) scale(1)' : 'translateX(-50px) scale(0.95)',
@@ -238,11 +238,11 @@ const HomePage = () => {
             <img
               src={differentiator?.image || "https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png"}
               alt="Why choose us"
-              className="w-full h-96 lg:h-[500px] object-cover rounded-2xl shadow-xl"
+              className="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] object-cover rounded-2xl shadow-xl"
             />
-            {/* Overlay card */}
+            {/* Overlay card - hidden on mobile */}
             <div
-              className="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-xl p-6 max-w-xs"
+              className="hidden lg:block absolute -bottom-6 -right-6 bg-white rounded-xl shadow-xl p-6 max-w-xs"
               style={{
                 opacity: isWhyChooseVisible ? 1 : 0,
                 transform: isWhyChooseVisible ? 'translateX(0) translateY(0)' : 'translateX(30px) translateY(30px)',
@@ -266,23 +266,24 @@ const HomePage = () => {
 
           {/* Content Side */}
           <div
+            className="order-1 lg:order-2"
             style={{
               opacity: isWhyChooseVisible ? 1 : 0,
               transform: isWhyChooseVisible ? 'translateX(0)' : 'translateX(50px)',
               transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s'
             }}
           >
-            <span className="inline-block text-primary-red font-medium mb-3 uppercase tracking-wide text-sm">
+            <span className="inline-block text-primary-red font-medium mb-2 sm:mb-3 uppercase tracking-wide text-sm">
               {differentiator?.title || 'Why Choose Us'}
             </span>
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-3 sm:mb-4">
               {differentiator?.headline || 'Inclusive Education & Tailored Immigration Support'}
             </h2>
-            <p className="text-text-muted text-lg leading-relaxed mb-6">
+            <p className="text-text-muted text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
               {differentiator?.description || 'At Voie Canada, we specialize in inclusive education pathways and tailored entrepreneur immigration programs.'}
             </p>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {differentiatorPoints.map((point, index) => (
                 <div
                   key={index}
@@ -293,23 +294,23 @@ const HomePage = () => {
                     transition: `all 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${0.3 + index * 0.1}s`
                   }}
                 >
-                  <div className="w-10 h-10 bg-secondary-green/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0 transition-all duration-300 group-hover:bg-secondary-green group-hover:scale-110">
-                    <svg className="w-5 h-5 text-secondary-green group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-secondary-green/10 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0 transition-all duration-300 group-hover:bg-secondary-green group-hover:scale-110">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-secondary-green group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-text-dark transition-colors group-hover:text-primary-blue">
+                    <h4 className="font-semibold text-sm sm:text-base text-text-dark transition-colors group-hover:text-primary-blue">
                       {point.title}
                     </h4>
-                    <p className="text-text-muted text-sm">{point.description}</p>
+                    <p className="text-text-muted text-xs sm:text-sm">{point.description}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-3 sm:gap-4"
               style={{
                 opacity: isWhyChooseVisible ? 1 : 0,
                 transform: isWhyChooseVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -336,32 +337,32 @@ const HomePage = () => {
         />
 
         <div ref={faqRef} className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {displayFaqs.slice(0, 6).map((faq, index) => (
               <div
                 key={index}
-                className="bg-secondary-gray rounded-xl p-6 hover:shadow-card transition-all duration-300 group"
+                className="bg-secondary-gray rounded-xl p-4 sm:p-6 hover:shadow-card transition-all duration-300 group"
                 style={{
                   opacity: isFaqVisible ? 1 : 0,
                   transform: isFaqVisible ? 'translateY(0)' : 'translateY(30px)',
                   transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
                 }}
               >
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-primary-blue/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1 transition-all duration-300 group-hover:bg-primary-blue">
-                    <svg className="w-4 h-4 text-primary-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary-blue/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1 transition-all duration-300 group-hover:bg-primary-blue">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-text-dark mb-2 transition-colors group-hover:text-primary-blue">
+                    <h4 className="font-semibold text-sm sm:text-base text-text-dark mb-1 sm:mb-2 transition-colors group-hover:text-primary-blue">
                       {faq.question}
                     </h4>
-                    <p className="text-text-muted text-sm leading-relaxed">
+                    <p className="text-text-muted text-xs sm:text-sm leading-relaxed">
                       {faq.answer}
                     </p>
                     {faq.category && (
-                      <span className="inline-block mt-3 px-2 py-1 bg-white text-xs font-medium text-primary-blue rounded">
+                      <span className="inline-block mt-2 sm:mt-3 px-2 py-1 bg-white text-xs font-medium text-primary-blue rounded">
                         {faq.category.charAt(0).toUpperCase() + faq.category.slice(1)}
                       </span>
                     )}
@@ -371,7 +372,7 @@ const HomePage = () => {
             ))}
           </div>
 
-          <div className="text-center mt-8">
+          <div className="text-center mt-6 sm:mt-8">
             <Button to="/faq" variant="secondary" className="hover-lift">
               View All FAQs
             </Button>
@@ -402,7 +403,7 @@ const HomePage = () => {
       <Section>
         <div
           ref={blogRef}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           style={{
             opacity: isBlogVisible ? 1 : 0,
             transform: isBlogVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -412,10 +413,10 @@ const HomePage = () => {
           <span className="inline-block text-primary-red font-medium mb-2 uppercase tracking-wide text-sm">
             Latest Resources
           </span>
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-3 sm:mb-4">
             Stay Informed
           </h2>
-          <p className="text-text-muted text-lg max-w-2xl mx-auto">
+          <p className="text-text-muted text-base sm:text-lg max-w-xl sm:max-w-2xl mx-auto px-4">
             Explore immigration updates, education trends, and helpful guides.
           </p>
         </div>

@@ -111,9 +111,9 @@ const ImageContentSection = ({
   };
 
   return (
-    <section className={`py-16 lg:py-24 ${backgrounds[background]} ${className}`}>
+    <section className={`py-12 sm:py-16 lg:py-24 ${backgrounds[background]} ${className}`}>
       <div className="container-custom">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${reverse ? 'lg:flex-row-reverse' : ''}`}>
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center ${reverse ? 'lg:flex-row-reverse' : ''}`}>
           {/* Image Side */}
           <div
             ref={imageRef}
@@ -133,26 +133,26 @@ const ImageContentSection = ({
                   <img
                     src={image}
                     alt={imageAlt || title}
-                    className="w-full h-80 lg:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-64 sm:h-72 md:h-80 lg:h-[400px] xl:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-blue/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Corner accents */}
-                  <div className="absolute top-4 right-4 w-16 h-16 border-t-2 border-r-2 border-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-4 w-16 h-16 border-b-2 border-l-2 border-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-4 right-4 w-12 h-12 sm:w-16 sm:h-16 border-t-2 border-r-2 border-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-4 w-12 h-12 sm:w-16 sm:h-16 border-b-2 border-l-2 border-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Floating badge */}
-                <div className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 bg-white rounded-xl shadow-lg p-4 transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-accent-gold/10 rounded-full flex items-center justify-center">
-                      <svg className="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="hidden sm:block absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 bg-white rounded-xl shadow-lg p-3 sm:p-4 transform rotate-3 hover:rotate-0 transition-transform duration-300 z-10">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-accent-gold/10 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-text-dark">Verified</div>
+                      <div className="text-xs sm:text-sm font-semibold text-text-dark">Verified</div>
                       <div className="text-xs text-text-muted">RCIC Certified</div>
                     </div>
                   </div>
@@ -175,48 +175,48 @@ const ImageContentSection = ({
           >
             {/* Subtitle */}
             {subtitle && (
-              <span className="inline-block text-primary-red font-medium mb-3 uppercase tracking-wide text-sm relative">
+              <span className="inline-block text-primary-red font-medium mb-2 sm:mb-3 uppercase tracking-wide text-sm relative">
                 {subtitle}
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-red/30" />
               </span>
             )}
 
             {/* Title */}
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4 relative">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-3 sm:mb-4 relative">
               {title}
-              <span className="absolute -bottom-1 left-0 w-16 h-1 bg-gradient-to-r from-primary-blue to-primary-red" />
+              <span className="absolute -bottom-1 left-0 w-12 sm:w-16 h-1 bg-gradient-to-r from-primary-blue to-primary-red" />
             </h2>
 
             {/* Description */}
             {description && (
-              <p className="text-text-muted text-lg leading-relaxed mb-6">
+              <p className="text-text-muted text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
                 {description}
               </p>
             )}
 
             {/* Points */}
             {points && points.length > 0 && (
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                 {points.map((point, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 group"
+                    className="flex items-start gap-3 sm:gap-4 group"
                     style={{
                       opacity: isContentVisible ? 1 : 0,
                       transform: isContentVisible ? 'translateX(0)' : 'translateX(20px)',
                       transition: `all 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${0.2 + index * 0.1}s`
                     }}
                   >
-                    <div className="w-12 h-12 bg-secondary-green/10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-secondary-green group-hover:scale-110">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary-green/10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-secondary-green group-hover:scale-110">
                       <span className="text-secondary-green group-hover:text-white transition-colors">
                         {getIcon(point.icon)}
                       </span>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-text-dark mb-1 group-hover:text-primary-blue transition-colors">
+                      <h4 className="font-semibold text-sm sm:text-base text-text-dark mb-1 group-hover:text-primary-blue transition-colors">
                         {point.title}
                       </h4>
-                      <p className="text-text-muted text-sm">{point.description}</p>
+                      <p className="text-text-muted text-xs sm:text-sm">{point.description}</p>
                     </div>
                   </div>
                 ))}
@@ -225,7 +225,7 @@ const ImageContentSection = ({
 
             {/* CTA Buttons */}
             {cta && (
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4">
                 {cta.primary && (
                   <Button to={cta.primary.link} variant="primary" size="lg" className="hover-lift">
                     {cta.primary.text}

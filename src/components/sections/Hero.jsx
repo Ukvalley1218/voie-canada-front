@@ -131,9 +131,9 @@ const Hero = () => {
       />
 
       {/* Content Container - Left Aligned */}
-      <div className="relative z-10 w-full lg:min-h-[90vh] flex items-center py-20 lg:py-0">
-        <div className="lg:ml-0 container-custom">
-          <div className="text-left max-w-2xl">
+      <div className="relative z-10 w-full min-h-[70vh] sm:min-h-[80vh] lg:min-h-[90vh] flex items-center py-16 sm:py-20 lg:py-0 lg:px-12">
+        <div className="w-full px-4 sm:px-6 lg:px-0 lg:ml-0 container-custom">
+          <div className="text-left max-w-xl sm:max-w-2xl">
             {/* Badge */}
             <AnimatedSection animation="fade-in-down" delay={100}>
               <div className="inline-flex items-center gap-2 bg-accent-gold/20 backdrop-blur-sm border border-accent-gold/40 px-4 py-2 rounded-full mb-6">
@@ -146,7 +146,7 @@ const Hero = () => {
 
             {/* Headline */}
             <AnimatedSection animation="fade-in-up" delay={200}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold text-white leading-tight mb-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold text-white leading-tight mb-3 sm:mb-4">
                 {headline.split(' ').map((word, idx, arr) => (
                   <span key={idx}>
                     {word.toLowerCase().includes('canada') ? (
@@ -162,23 +162,23 @@ const Hero = () => {
 
             {/* Subheadline */}
             <AnimatedSection animation="fade-in-up" delay={300}>
-              <p className="text-xl md:text-2xl text-white font-light mb-3">
+              <p className="text-lg sm:text-xl md:text-2xl text-white font-light mb-2 sm:mb-3">
                 {subheadline}
               </p>
             </AnimatedSection>
 
             {/* Description */}
             <AnimatedSection animation="fade-in-up" delay={400}>
-              <p className="text-white/80 text-lg mb-8 max-w-lg">
+              <p className="text-white/80 text-base sm:text-lg mb-6 sm:mb-8 max-w-md sm:max-w-lg">
                 {description}
               </p>
             </AnimatedSection>
 
             {/* CTA Buttons */}
             <AnimatedSection animation="fade-in-up" delay={500}>
-              <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                <Button to={primaryCTA.link} variant="gold" size="sm" className="hover-lift group">
-                  <span className="flex items-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
+                <Button to={primaryCTA.link} variant="gold" size="sm" className="hover-lift group w-full sm:w-auto justify-center">
+                  <span className="flex items-center justify-center">
                     {primaryCTA.text}
                     <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -189,7 +189,7 @@ const Hero = () => {
                   to={secondaryCTA.link}
                   variant="secondary"
                   size="lg"
-                  className="!bg-white/10 !border-white/50 !text-white hover:!bg-white hover:!text-primary-blue transition-all duration-300 hover-lift"
+                  className="!bg-white/10 !border-white/50 !text-white hover:!bg-white hover:!text-primary-blue transition-all duration-300 hover-lift w-full sm:w-auto justify-center"
                 >
                   {secondaryCTA.text}
                 </Button>
@@ -198,7 +198,7 @@ const Hero = () => {
 
             {/* Stats */}
             {showStats && (
-              <div className="flex flex-wrap gap-8">
+              <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-8">
                 {displayStats.map((stat, index) => {
                   // Different animations for each stat
                   const animations = ['scale-up', 'fade-in-left', 'scale-up'];
@@ -209,11 +209,11 @@ const Hero = () => {
                       animation={animations[index % animations.length]}
                       delay={delays[index % delays.length]}
                     >
-                      <div className="text-left">
-                        <div className="text-3xl md:text-4xl font-heading font-bold text-white mb-1">
+                      <div className="text-left min-w-[80px] sm:min-w-[100px]">
+                        <div className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white mb-1">
                           {stat.value}
                         </div>
-                        <div className="text-white/70 text-sm">{stat.label}</div>
+                        <div className="text-white/70 text-xs sm:text-sm">{stat.label}</div>
                       </div>
                     </AnimatedSection>
                   );

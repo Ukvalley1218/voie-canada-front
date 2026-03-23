@@ -22,7 +22,7 @@ const TestimonialsPreview = ({
         centered={true}
       />
 
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {testimonials.slice(0, 3).map((testimonial, index) => (
           <div
             key={testimonial._id || index}
@@ -45,7 +45,7 @@ const TestimonialsPreview = ({
         ))}
       </div>
 
-      <div className="text-center mt-10">
+      <div className="text-center mt-8 sm:mt-10">
         <Button to="/success-stories" variant="secondary" className="hover-lift">
           Read More Stories
           <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

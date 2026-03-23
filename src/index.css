@@ -771,4 +771,30 @@
   .hover-lift:hover {
     transform: none;
   }
+
+  /* Fix for absolute positioned elements on mobile */
+  .absolute.-bottom-6,
+  .absolute.-right-6 {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 1rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .hover-lift:hover {
+    transform: none;
+  }
+
+  .hover-scale:hover {
+    transform: none;
+  }
+
+  .group:hover .group-hover\:scale-110,
+  .group:hover .group-hover\:bg-primary-blue,
+  .group:hover .group-hover\:text-white {
+    transform: none;
+  }
 }

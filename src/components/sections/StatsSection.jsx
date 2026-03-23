@@ -52,19 +52,19 @@ const StatsSection = ({
   return (
     <Section background={background}>
       {/* Section Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-8 sm:mb-12">
         {subtitle && (
           <span className="inline-block text-primary-red font-medium mb-2 uppercase tracking-wide text-sm">
             {subtitle}
           </span>
         )}
-        <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-3 sm:mb-4">
           {title}
         </h2>
       </div>
 
       {/* Stats Grid */}
-      <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {displayStats.map((stat, index) => (
           <div
             key={index}
@@ -75,26 +75,26 @@ const StatsSection = ({
               transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
             }}
           >
-            <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-2 text-center relative overflow-hidden">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-2 text-center relative overflow-hidden">
               {/* Background gradient accent */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-blue via-primary-red to-accent-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
               {/* Icon */}
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-blue/10 to-primary-red/10 rounded-xl flex items-center justify-center text-primary-blue transition-all duration-300 group-hover:scale-110 group-hover:from-primary-blue group-hover:to-primary-red group-hover:text-white">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mx-auto mb-3 sm:mb-4 bg-gradient-to-br from-primary-blue/10 to-primary-red/10 rounded-xl flex items-center justify-center text-primary-blue transition-all duration-300 group-hover:scale-110 group-hover:from-primary-blue group-hover:to-primary-red group-hover:text-white">
                 {getIcon(stat.icon)}
               </div>
 
               {/* Number */}
-              <div className="text-4xl lg:text-5xl font-heading font-bold text-primary-blue mb-2 transition-transform duration-300 group-hover:scale-110">
+              <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-heading font-bold text-primary-blue mb-1 sm:mb-2 transition-transform duration-300 group-hover:scale-110">
                 {stat.number}
               </div>
 
               {/* Label */}
-              <div className="text-text-muted font-medium mb-2">{stat.label}</div>
+              <div className="text-text-muted text-xs sm:text-sm lg:text-base font-medium mb-2">{stat.label}</div>
 
               {/* Description */}
               {stat.description && (
-                <div className="text-text-light text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="text-text-light text-xs sm:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block">
                   {stat.description}
                 </div>
               )}
@@ -111,21 +111,21 @@ const StatsSection = ({
       </div>
 
       {/* Trust badges */}
-      <div className="mt-12 text-center">
-        <p className="text-text-muted text-sm mb-4">Trusted by clients worldwide</p>
-        <div className="flex flex-wrap justify-center gap-6 items-center opacity-60">
+      <div className="mt-8 sm:mt-12 text-center">
+        <p className="text-text-muted text-xs sm:text-sm mb-3 sm:mb-4">Trusted by clients worldwide</p>
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-6 items-center opacity-60">
           {/* Certification badges */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm">
-            <svg className="w-5 h-5 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white rounded-lg shadow-sm">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
-            <span className="text-text-dark text-sm font-medium">ICCRC Certified</span>
+            <span className="text-text-dark text-xs sm:text-sm font-medium">ICCRC Certified</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm">
-            <svg className="w-5 h-5 text-secondary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white rounded-lg shadow-sm">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-secondary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            <span className="text-text-dark text-sm font-medium">Verified Agency</span>
+            <span className="text-text-dark text-xs sm:text-sm font-medium">Verified Agency</span>
           </div>
         </div>
       </div>

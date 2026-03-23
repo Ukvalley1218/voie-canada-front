@@ -17,7 +17,7 @@ const Section = ({
   return (
     <Component
       id={id}
-      className={`py-12 lg:py-16 ${backgrounds[background]} ${className}`}
+      className={`py-10 sm:py-12 lg:py-16 ${backgrounds[background]} ${className}`}
     >
       <Container>
         {children}
