@@ -41,6 +41,7 @@ export const defaultSettings = {
     title: 'Why Choose Us',
     headline: 'Inclusive Education & Tailored Immigration Support',
     description: 'At Voie Canada, we specialize in inclusive education pathways and tailored entrepreneur immigration programs. Our unique expertise in supporting academically challenged students sets us apart.',
+    image: 'https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png',
     points: [
       { title: 'Specialized Student Support', description: 'Expert guidance for students with learning challenges' },
       { title: 'Entrepreneur Immigration', description: 'Dedicated startup visa and business immigration programs' },
@@ -239,6 +240,31 @@ export const defaultSettings = {
       text: 'Book Consultation',
       link: '/contact'
     }
+  },
+
+  // About Page Settings
+  aboutPage: {
+    heroTitle: 'Who We Are',
+    heroSubtitle: 'Voie Canada is a trusted immigration and education consultancy dedicated to helping professionals, entrepreneurs, and students achieve success in Canada.',
+    storyTitle: 'Our Story',
+    storyHeadline: 'Building Bridges to Canadian Dreams',
+    storyDescription: 'Founded with a vision to make Canadian immigration and education accessible to everyone, Voie Canada has grown from a small consultancy to a trusted partner for hundreds of families and students. Our journey began when we recognized the unique challenges faced by individuals with diverse backgrounds and learning needs.',
+    storyImage: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
+    mission: {
+      title: 'Our Mission',
+      description: 'To provide personalized, transparent, and inclusive pathways for immigration and education, ensuring every client receives expert guidance tailored to their unique circumstances and goals.'
+    },
+    vision: {
+      title: 'Our Vision',
+      description: 'To be the most trusted partner for families and professionals seeking opportunities in Canada, known for our expertise, integrity, and commitment to inclusive education and immigration services.'
+    },
+    values: [
+      { title: 'Integrity', description: 'We operate with complete transparency and honesty in all our dealings.', icon: 'shield' },
+      { title: 'Inclusivity', description: 'We believe everyone deserves a fair chance at their Canadian dream.', icon: 'users' },
+      { title: 'Innovation', description: 'We continuously adapt to provide the best solutions for our clients.', icon: 'lightbulb' },
+      { title: 'Compassion', description: 'We treat every client\'s journey as if it were our own.', icon: 'heart' }
+    ],
+    showTeam: true
   }
 };
 

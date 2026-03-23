@@ -4,15 +4,26 @@ import Section from '../components/ui/Section';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import ServiceCard from '../components/common/ServiceCard';
+import { useFetchData } from '../hooks/useFetchData';
+import { serviceService } from '../services';
+import { useSettings } from '../contexts/SettingsContext';
 
 const ImmigrationPage = () => {
+  const { processSteps: settingsProcessSteps } = useSettings();
   const [heroRef, isHeroVisible] = useInView({ threshold: 0.2 });
   const [servicesRef, isServicesVisible] = useInView({ threshold: 0.2 });
   const [processRef, isProcessVisible] = useInView({ threshold: 0.2 });
   const [whyRef, isWhyVisible] = useInView({ threshold: 0.2 });
   const [ctaRef, isCtaVisible] = useInView({ threshold: 0.2 });
 
-  const services = [
+  // Fetch immigration services from API
+  const { data: apiServices } = useFetchData(
+    () => serviceService.getByCategory('immigration'),
+    []
+  );
+
+  // Default services for fallback
+  const defaultServices = [
     {
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +86,19 @@ const ImmigrationPage = () => {
     },
   ];
 
-  const processSteps = [
+  // Use API data if available, otherwise use defaults
+  const services = apiServices?.length > 0
+    ? apiServices.map(service => ({
+        icon: null, // Icons will be handled by slug-based logic
+        title: service.title,
+        description: service.description,
+        link: `/immigration/${service.slug || service._id}`,
+        slug: service.slug
+      }))
+    : defaultServices;
+
+  // Process steps from settings or defaults
+  const defaultProcessSteps = [
     { step: 1, title: 'Free Assessment', description: 'Share your background and goals for a personalized evaluation.' },
     { step: 2, title: 'Strategy Planning', description: 'Receive a tailored immigration strategy based on your profile.' },
     { step: 3, title: 'Documentation', description: 'We help gather and prepare all required documents accurately.' },
@@ -84,12 +107,41 @@ const ImmigrationPage = () => {
     { step: 6, title: 'Arrival', description: 'Welcome to Canada! We support your settlement journey.' },
   ];
 
+  const processSteps = settingsProcessSteps?.length > 0
+    ? settingsProcessSteps
+    : defaultProcessSteps;
+
   const whyChooseItems = [
     { title: 'ICCRC Certified Consultants', description: 'All our consultants are licensed and regulated' },
     { title: 'Personalized Strategy', description: 'Tailored plans based on your unique profile' },
     { title: 'High Success Rate', description: 'Over 95% of our applications are successful' },
     { title: 'Complex Case Expertise', description: 'Specialized handling of appeals and refusals' },
   ];
+
+  // Icon mapping for services
+  const getServiceIcon = (slug, index) => {
+    const icons = [
+      <svg key="lightning" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>,
+      <svg key="building" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>,
+      <svg key="globe" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>,
+      <svg key="language" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+      </svg>,
+      <svg key="shield" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>,
+      <svg key="home" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>,
+    ];
+    return icons[index % icons.length];
+  };
 
   return (
     <>
@@ -130,7 +182,7 @@ const ImmigrationPage = () => {
         <div ref={servicesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {services.map((service, index) => (
             <div
-              key={index}
+              key={service.slug || index}
               style={{
                 opacity: isServicesVisible ? 1 : 0,
                 transform: isServicesVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -138,7 +190,7 @@ const ImmigrationPage = () => {
               }}
             >
               <ServiceCard
-                icon={service.icon}
+                icon={service.icon || getServiceIcon(service.slug, index)}
                 title={service.title}
                 description={service.description}
                 link={service.link}
@@ -174,16 +226,12 @@ const ImmigrationPage = () => {
               }}
             >
               <div className="absolute -top-4 -left-4 w-10 h-10 bg-primary-blue rounded-full flex items-center justify-center text-white font-heading font-bold transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary-red">
-                {step.step}
+                {step.number || step.step}
               </div>
               <h4 className="text-lg font-heading font-semibold text-primary-blue mb-2 mt-2 transition-colors duration-300 group-hover:text-primary-red">
                 {step.title}
               </h4>
               <p className="text-text-muted text-sm">{step.description}</p>
-              {/* Progress connector */}
-              {index < processSteps.length - 1 && (index + 1) % 3 !== 0 && (
-                <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-primary-blue/20" />
-              )}
             </div>
           ))}
         </div>

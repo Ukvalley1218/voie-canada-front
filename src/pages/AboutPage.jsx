@@ -3,42 +3,33 @@ import Section from '../components/ui/Section';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import SectionLayout from '../components/common/SectionLayout';
+import { useFetchData } from '../hooks/useFetchData';
+import { teamService } from '../services';
+import { useSettings } from '../contexts/SettingsContext';
+import { defaultTeamMembers } from '../data/defaults';
 
 const AboutPage = () => {
+  const { aboutPage, certifications } = useSettings();
+
   const [heroRef, isHeroVisible] = useInView({ threshold: 0.2 });
   const [valuesRef, isValuesVisible] = useInView({ threshold: 0.2 });
   const [teamRef, isTeamVisible] = useInView({ threshold: 0.2 });
   const [certRef, isCertVisible] = useInView({ threshold: 0.2 });
   const [ctaRef, isCtaVisible] = useInView({ threshold: 0.2 });
 
-  const teamMembers = [
-    {
-      name: 'John Smith',
-      title: 'Founder & Lead Consultant',
-      bio: '15+ years of experience in Canadian immigration law and consultancy.',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      name: 'Sarah Johnson',
-      title: 'Education Specialist',
-      bio: 'Expert in Canadian university admissions and inclusive education pathways.',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      name: 'Michael Chen',
-      title: 'Immigration Consultant',
-      bio: 'RCIC certified with expertise in Express Entry and Provincial Nominee Programs.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      name: 'Emily Williams',
-      title: 'Student Advisor',
-      bio: 'Specializes in supporting students with learning challenges and unique needs.',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80'
-    },
-  ];
+  // Fetch team members from API
+  const { data: apiTeamMembers } = useFetchData(
+    () => teamService.getAll(),
+    []
+  );
 
-  const values = [
+  // Use API data if available, otherwise use defaults
+  const teamMembers = apiTeamMembers?.length > 0
+    ? apiTeamMembers.filter(m => m.isActive !== false)
+    : defaultTeamMembers;
+
+  // Get values from settings or use defaults
+  const defaultValues = [
     {
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,11 +68,21 @@ const AboutPage = () => {
     },
   ];
 
-  const certifications = [
+  const values = aboutPage?.values?.length > 0
+    ? aboutPage.values.map((v, index) => ({
+        ...v,
+        icon: defaultValues[index % defaultValues.length]?.icon
+      }))
+    : defaultValues;
+
+  // Get certifications from settings or use defaults
+  const defaultCertifications = [
     { name: 'ICCRC', description: 'Immigration Consultants of Canada Regulatory Council' },
     { name: 'CAPIC', description: 'Canadian Association of Professional Immigration Consultants' },
     { name: 'CSIC', description: 'Canadian Society of Immigration Consultants' },
   ];
+
+  const displayCertifications = certifications?.length > 0 ? certifications : defaultCertifications;
 
   return (
     <>
@@ -100,21 +101,20 @@ const AboutPage = () => {
             About Us
           </span>
           <h1 className="text-4xl lg:text-5xl font-heading font-bold text-white mb-4">
-            Who We Are
+            {aboutPage?.heroTitle || 'Who We Are'}
           </h1>
           <p className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed">
-            Voie Canada is a trusted immigration and education consultancy dedicated to helping
-            professionals, entrepreneurs, and students achieve success in Canada.
+            {aboutPage?.heroSubtitle || 'Voie Canada is a trusted immigration and education consultancy dedicated to helping professionals, entrepreneurs, and students achieve success in Canada.'}
           </p>
         </div>
       </Section>
 
       {/* Story */}
       <SectionLayout
-        subtitle="Our Story"
-        title="Building Bridges to Canadian Dreams"
-        description="Founded with a vision to make Canadian immigration and education accessible to everyone, Voie Canada has grown from a small consultancy to a trusted partner for hundreds of families and students. Our journey began when we recognized the unique challenges faced by individuals with diverse backgrounds and learning needs."
-        image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+        subtitle={aboutPage?.storyTitle || 'Our Story'}
+        title={aboutPage?.storyHeadline || 'Building Bridges to Canadian Dreams'}
+        description={aboutPage?.storyDescription || 'Founded with a vision to make Canadian immigration and education accessible to everyone, Voie Canada has grown from a small consultancy to a trusted partner for hundreds of families and students. Our journey began when we recognized the unique challenges faced by individuals with diverse backgrounds and learning needs.'}
+        image={aboutPage?.storyImage || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'}
         imageAlt="Voie Canada team collaboration"
         reverse={false}
         cta={{
@@ -138,10 +138,11 @@ const AboutPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 className="text-2xl font-heading font-bold text-primary-blue mb-4">Our Mission</h3>
+            <h3 className="text-2xl font-heading font-bold text-primary-blue mb-4">
+              {aboutPage?.mission?.title || 'Our Mission'}
+            </h3>
             <p className="text-text-muted leading-relaxed">
-              To provide personalized, transparent, and inclusive pathways for immigration and education,
-              ensuring every client receives expert guidance tailored to their unique circumstances and goals.
+              {aboutPage?.mission?.description || 'To provide personalized, transparent, and inclusive pathways for immigration and education, ensuring every client receives expert guidance tailored to their unique circumstances and goals.'}
             </p>
           </div>
 
@@ -159,10 +160,11 @@ const AboutPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
               </svg>
             </div>
-            <h3 className="text-2xl font-heading font-bold text-primary-blue mb-4">Our Vision</h3>
+            <h3 className="text-2xl font-heading font-bold text-primary-blue mb-4">
+              {aboutPage?.vision?.title || 'Our Vision'}
+            </h3>
             <p className="text-text-muted leading-relaxed">
-              To be the most trusted partner for families and professionals seeking opportunities in Canada,
-              known for our expertise, integrity, and commitment to inclusive education and immigration services.
+              {aboutPage?.vision?.description || 'To be the most trusted partner for families and professionals seeking opportunities in Canada, known for our expertise, integrity, and commitment to inclusive education and immigration services.'}
             </p>
           </div>
         </div>
@@ -205,52 +207,54 @@ const AboutPage = () => {
       </Section>
 
       {/* Team */}
-      <Section background="gray" id="team">
-        <div className="text-center mb-12">
-          <span className="inline-block text-primary-red font-medium mb-2 uppercase tracking-wide text-sm">
-            Our Team
-          </span>
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
-            Meet Our Experts
-          </h2>
-          <p className="text-text-muted text-lg max-w-2xl mx-auto">
-            Our dedicated team of certified consultants and education specialists are here to guide you every step of the way.
-          </p>
-        </div>
+      {aboutPage?.showTeam !== false && (
+        <Section background="gray" id="team">
+          <div className="text-center mb-12">
+            <span className="inline-block text-primary-red font-medium mb-2 uppercase tracking-wide text-sm">
+              Our Team
+            </span>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-primary-blue mb-4">
+              Meet Our Experts
+            </h2>
+            <p className="text-text-muted text-lg max-w-2xl mx-auto">
+              Our dedicated team of certified consultants and education specialists are here to guide you every step of the way.
+            </p>
+          </div>
 
-        <div ref={teamRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {teamMembers.map((member, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-card overflow-hidden group hover:shadow-card-hover transition-all duration-300"
-              style={{
-                opacity: isTeamVisible ? 1 : 0,
-                transform: isTeamVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
-                transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
-              }}
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-blue/60 via-primary-blue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-white text-sm">{member.bio}</p>
+          <div ref={teamRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {teamMembers.map((member, index) => (
+              <div
+                key={member._id || index}
+                className="bg-white rounded-xl shadow-card overflow-hidden group hover:shadow-card-hover transition-all duration-300"
+                style={{
+                  opacity: isTeamVisible ? 1 : 0,
+                  transform: isTeamVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
+                  transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
+                }}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={member.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=1e3a8a&color=fff&size=200`}
+                    alt={member.name}
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-blue/60 via-primary-blue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-white text-sm">{member.bio || 'Expert consultant dedicated to your success.'}</p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h4 className="text-lg font-heading font-semibold text-primary-blue mb-1 transition-colors duration-300 group-hover:text-primary-red">
+                    {member.name}
+                  </h4>
+                  <p className="text-primary-red text-sm font-medium mb-2">{member.title}</p>
+                  <div className="h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-primary-blue to-primary-red transition-all duration-300" />
                 </div>
               </div>
-              <div className="p-6">
-                <h4 className="text-lg font-heading font-semibold text-primary-blue mb-1 transition-colors duration-300 group-hover:text-primary-red">
-                  {member.name}
-                </h4>
-                <p className="text-primary-red text-sm font-medium mb-2">{member.title}</p>
-                <div className="h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-primary-blue to-primary-red transition-all duration-300" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </Section>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* Certifications */}
       <Section>
@@ -267,7 +271,7 @@ const AboutPage = () => {
         </div>
 
         <div ref={certRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {certifications.map((cert, index) => (
+          {displayCertifications.map((cert, index) => (
             <div
               key={index}
               className="bg-secondary-gray p-8 rounded-xl text-center hover:shadow-card-hover transition-all duration-300 hover:-translate-y-2 group"

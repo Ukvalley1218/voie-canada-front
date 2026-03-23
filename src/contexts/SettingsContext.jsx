@@ -53,7 +53,9 @@ export const SettingsProvider = ({ children }) => {
     homepageSections: settings.homepageSections?.length > 0 ? settings.homepageSections : defaultSettings.homepageSections,
     statsSection: settings.statsSection || defaultSettings.statsSection,
     testimonialsSection: settings.testimonialsSection || defaultSettings.testimonialsSection,
-    ctaBanner: settings.ctaBanner || defaultSettings.ctaBanner
+    ctaBanner: settings.ctaBanner || defaultSettings.ctaBanner,
+    // About page settings
+    aboutPage: settings.aboutPage || defaultSettings.aboutPage
   };
 
   return (

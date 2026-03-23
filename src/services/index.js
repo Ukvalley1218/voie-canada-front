@@ -37,6 +37,11 @@ export const settingsService = {
   updateCTA: (data) => api.put('/settings/cta', data)
 };
 
+export const teamService = {
+  getAll: () => api.get('/team'),
+  getById: (id) => api.get(`/team/${id}`)
+};
+
 export const uploadService = {
   uploadImage: (formData) => api.post('/upload/image', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }

@@ -4,6 +4,8 @@ import Section from '../components/ui/Section';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import ServiceCard from '../components/common/ServiceCard';
+import { useFetchData } from '../hooks/useFetchData';
+import { serviceService } from '../services';
 
 const EducationPage = () => {
   const [heroRef, isHeroVisible] = useInView({ threshold: 0.2 });
@@ -13,70 +15,87 @@ const EducationPage = () => {
   const [scholarshipRef, isScholarshipVisible] = useInView({ threshold: 0.2 });
   const [ctaRef, isCtaVisible] = useInView({ threshold: 0.2 });
 
-  const services = [
+  // Fetch education services from API
+  const { data: apiServices } = useFetchData(
+    () => serviceService.getByCategory('education'),
+    []
+  );
+
+  // Default services for fallback
+  const defaultServices = [
     {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path d="M12 14l9-5-9-5-9 5 9 5z" />
-          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-        </svg>
-      ),
       title: 'College & University Admissions',
       description: 'Secure admission to Canada\'s top institutions with personalized guidance on programs, applications, and enrollment.',
-      link: '/education/admissions'
+      link: '/education/admissions',
+      badge: null
     },
     {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
-      ),
       title: 'Specialized Programs for Challenged Students',
       description: 'Inclusive support for students with learning challenges, special needs, and unique educational requirements.',
       link: '/education/specialized-programs',
       badge: 'Unique'
     },
     {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-        </svg>
-      ),
       title: 'Bridge & Foundation Programs',
       description: 'Prepare for success with bridge programs and foundation courses designed for international students.',
-      link: '/education/bridge-programs'
+      link: '/education/bridge-programs',
+      badge: null
     },
     {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
       title: 'Scholarship & Financial Aid Guidance',
       description: 'Maximize your opportunities with tailored scholarship support and financial aid application assistance.',
-      link: '/education/scholarships'
+      link: '/education/scholarships',
+      badge: null
     },
     {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-      ),
       title: 'Career Clarity & Aptitude Testing',
       description: 'Discover the right program for your future with professional career guidance and aptitude assessments.',
-      link: '/education/career-clarity'
+      link: '/education/career-clarity',
+      badge: null
     },
     {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      ),
       title: 'Parent Advisory Services',
       description: 'Comprehensive guidance for families relocating with children, including school selection and educational planning.',
-      link: '/education/parent-advisory'
+      link: '/education/parent-advisory',
+      badge: null
     },
   ];
+
+  // Use API data if available, otherwise use defaults
+  const services = apiServices?.length > 0
+    ? apiServices.map(service => ({
+        title: service.title,
+        description: service.description,
+        link: `/education/${service.slug || service._id}`,
+        badge: service.badge
+      }))
+    : defaultServices;
+
+  // Icon mapping for services
+  const getServiceIcon = (index) => {
+    const icons = [
+      <svg key="academic" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+        <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+      </svg>,
+      <svg key="heart" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>,
+      <svg key="exchange" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+      </svg>,
+      <svg key="currency" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>,
+      <svg key="lightbulb" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>,
+      <svg key="users" className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>,
+    ];
+    return icons[index % icons.length];
+  };
 
   const whyChooseUs = [
     { title: 'Inclusive Education Expertise', description: 'Specialized support for students with learning challenges and unique needs' },
@@ -183,7 +202,7 @@ const EducationPage = () => {
         <div ref={servicesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {services.map((service, index) => (
             <div
-              key={index}
+              key={service.link || index}
               style={{
                 opacity: isServicesVisible ? 1 : 0,
                 transform: isServicesVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -191,7 +210,7 @@ const EducationPage = () => {
               }}
             >
               <ServiceCard
-                icon={service.icon}
+                icon={getServiceIcon(index)}
                 title={service.title}
                 description={service.description}
                 link={service.link}

@@ -494,7 +494,7 @@ const ContactPage = () => {
       </Section>
 
       {/* CTA */}
-      <Section background="blue">
+      <Section background="white">
         <div
           ref={ctaRef}
           className="text-center"
@@ -504,10 +504,10 @@ const ContactPage = () => {
             transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">
+          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-black mb-4">
             Ready to Start Your Journey?
           </h2>
-          <p className="text-white/80 text-lg mb-6 max-w-2xl mx-auto">
+          <p className="text-black text-lg mb-6 max-w-2xl mx-auto">
             Book a free consultation with our experts and take the first step towards your Canadian dream.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -519,7 +519,7 @@ const ContactPage = () => {
                 to={`https://wa.me/${contact.whatsapp.replace(/\D/g, '')}`}
                 variant="secondary"
                 size="lg"
-                className="!bg-white/10 !border-white !text-white hover:!bg-white hover:!text-primary-blue hover-lift"
+                className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift"
               >
                 WhatsApp Us
               </Button>

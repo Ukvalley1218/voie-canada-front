@@ -4,6 +4,8 @@ import Section from '../components/ui/Section';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import TestimonialCard from '../components/common/TestimonialCard';
+import { useFetchData } from '../hooks/useFetchData';
+import { testimonialService } from '../services';
 
 const SuccessStoriesPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -20,8 +22,10 @@ const SuccessStoriesPage = () => {
     { id: 'family', label: 'Families' },
   ];
 
-  const stories = [
+  // Default stories for fallback
+  const defaultStories = [
     {
+      _id: 'default-1',
       quote: 'From visa refusal to successful PR in 8 months. Voie Canada\'s expertise in handling complex cases was remarkable. They identified the issues with my previous application and guided me through every step.',
       name: 'Rajesh Kumar',
       role: 'Software Engineer',
@@ -30,6 +34,7 @@ const SuccessStoriesPage = () => {
       journey: 'From Refusal to Approval'
     },
     {
+      _id: 'default-2',
       quote: 'As a student with dyslexia, I thought studying abroad was impossible. Voie Canada found the perfect university with learning support. I\'m now thriving in my computer science program!',
       name: 'Ananya Patel',
       role: 'Student',
@@ -38,6 +43,7 @@ const SuccessStoriesPage = () => {
       journey: 'Inclusive Education Success'
     },
     {
+      _id: 'default-3',
       quote: 'Their startup visa guidance was exceptional. From business plan to PR, they supported us at every step. We\'re now running a successful tech company in Vancouver.',
       name: 'Mohammed & Sarah Ahmed',
       role: 'Entrepreneurs',
@@ -46,6 +52,7 @@ const SuccessStoriesPage = () => {
       journey: 'Business Immigration Success'
     },
     {
+      _id: 'default-4',
       quote: 'Moving our family of four was overwhelming. Voie Canada handled everything - from our Express Entry application to finding schools for our children. They made Canada feel like home.',
       name: 'The Johnson Family',
       role: 'Family',
@@ -54,6 +61,7 @@ const SuccessStoriesPage = () => {
       journey: 'Family Settlement'
     },
     {
+      _id: 'default-5',
       quote: 'The PNP process seemed complicated, but Voie Canada made it simple. They helped me navigate the Ontario Immigrant Nominee Program and I received my nomination within months.',
       name: 'Priya Sharma',
       role: 'Data Analyst',
@@ -62,6 +70,7 @@ const SuccessStoriesPage = () => {
       journey: 'PNP Success'
     },
     {
+      _id: 'default-6',
       quote: 'My son has autism, and we were worried about his education in a new country. Voie Canada connected us with schools that offer excellent special needs programs. He\'s thriving now!',
       name: 'David & Maria Rodriguez',
       role: 'Parents',
@@ -71,9 +80,28 @@ const SuccessStoriesPage = () => {
     },
   ];
 
+  // Fetch testimonials from API
+  const { data: apiTestimonials } = useFetchData(
+    () => testimonialService.getAll({}),
+    []
+  );
+
+  // Use API data if available, otherwise use defaults
+  const allStories = apiTestimonials?.length > 0
+    ? apiTestimonials.filter(t => t.isActive !== false).map(t => ({
+        _id: t._id,
+        quote: t.quote,
+        name: t.name,
+        role: t.role || '',
+        company: t.company || '',
+        category: t.category || 'professional',
+        journey: t.journey || ''
+      }))
+    : defaultStories;
+
   const filteredStories = activeFilter === 'all'
-    ? stories
-    : stories.filter(story => story.category === activeFilter);
+    ? allStories
+    : allStories.filter(story => story.category === activeFilter);
 
   return (
     <>

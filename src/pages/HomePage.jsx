@@ -236,7 +236,7 @@ const HomePage = () => {
             }}
           >
             <img
-              src={differentiator?.imagurl || "https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png"}
+              src={differentiator?.image || "https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png"}
               alt="Why choose us"
               className="w-full h-96 lg:h-[500px] object-cover rounded-2xl shadow-xl"
             />
