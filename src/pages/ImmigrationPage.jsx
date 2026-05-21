@@ -25,6 +25,7 @@ const ImmigrationPage = () => {
   // Default services for fallback
   const defaultServices = [
     {
+      slug: 'express-entry-skilled-worker-programs',
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -32,9 +33,19 @@ const ImmigrationPage = () => {
       ),
       title: 'Express Entry & Skilled Worker Programs',
       description: 'Fast-track your Canadian permanent residency through Express Entry, Federal Skilled Worker, Canadian Experience Class, and Federal Skilled Trades programs.',
-      link: '/immigration/express-entry'
+      longDescription: 'Express Entry is Canada\'s flagship application management system for skilled workers. Our team helps you navigate the Comprehensive Ranking System (CRS), optimize your profile, and maximize your chances of receiving an Invitation to Apply (ITA) for permanent residency.',
+      benefits: [
+        'CRS score optimization strategies',
+        'Profile creation and management',
+        'Document checklist and verification',
+        'Regular draw monitoring and updates',
+        'Provincial Nominee alignment guidance',
+        'Post-ITA application support'
+      ],
+      link: '/immigration/express-entry-skilled-worker-programs'
     },
     {
+      slug: 'entrepreneur-startup-visa-programs',
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -42,9 +53,19 @@ const ImmigrationPage = () => {
       ),
       title: 'Entrepreneur & Startup Visa Programs',
       description: 'Launch your business in Canada with expert support for Startup Visa, Self-Employed Persons, and Business Immigration programs.',
-      link: '/immigration/startup-visa'
+      longDescription: 'Canada offers excellent pathways for entrepreneurs and business owners to establish themselves. The Startup Visa program provides a direct path to permanent residency for innovative entrepreneurs with the support of designated Canadian investors.',
+      benefits: [
+        'Business plan development support',
+        'Designated organization introductions',
+        'Investment pitch preparation',
+        'Self-Employed program assessment',
+        'Business immigration strategy',
+        'Post-landing business support'
+      ],
+      link: '/immigration/entrepreneur-startup-visa-programs'
     },
     {
+      slug: 'provincial-nominee-programs-pnp',
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -52,9 +73,19 @@ const ImmigrationPage = () => {
       ),
       title: 'Provincial Nominee Programs (PNP)',
       description: 'Explore immigration opportunities across Canada\'s provinces and territories with tailored PNP guidance for your skills and goals.',
-      link: '/immigration/pnp'
+      longDescription: 'Each Canadian province and territory operates its own immigration programs designed to address local labor market needs. We help you identify the right PNP stream based on your occupation, education, and connection to the province.',
+      benefits: [
+        'Province-specific eligibility assessment',
+        'Occupation-based stream matching',
+        'Application documentation support',
+        'Provincial and federal coordination',
+        'Enhanced PNP strategies',
+        'Settlement planning per province'
+      ],
+      link: '/immigration/provincial-nominee-programs-pnp'
     },
     {
+      slug: 'francophone-immigration-pathways',
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
@@ -62,9 +93,19 @@ const ImmigrationPage = () => {
       ),
       title: 'Francophone Immigration Pathways',
       description: 'Specialized support for French-speaking applicants seeking to immigrate to Canada through Francophone immigration streams.',
-      link: '/immigration/francophone'
+      longDescription: 'Canada values French-speaking immigrants and offers special pathways for Francophones. These programs provide priority processing and additional points toward your application, making it easier for French speakers to settle in Canada.',
+      benefits: [
+        'French language proficiency assessment',
+        'Francophone community connections',
+        'Mobility Francophone stream guidance',
+        'Ontario Francophone PNP support',
+        'Settlement in Francophone communities',
+        'Language test preparation tips'
+      ],
+      link: '/immigration/francophone-immigration-pathways'
     },
     {
+      slug: 'complex-case-handling',
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -72,9 +113,20 @@ const ImmigrationPage = () => {
       ),
       title: 'Complex Case Handling',
       description: 'Expert support for appeals, refusals, and reapplications. We navigate complex immigration situations with proven strategies.',
-      link: '/immigration/complex-cases'
+      longDescription: 'Not all immigration cases are straightforward. Our team specializes in handling complicated situations including previous refusals, medical inadmissibility, criminal inadmissibility, and other challenging circumstances that require expert intervention.',
+      benefits: [
+        'Refusal analysis and strategy',
+        'Appeal preparation support',
+        'Medical inadmissibility solutions',
+        'Criminal rehabilitation applications',
+        'Procedural fairness responses',
+        'Judicial review coordination'
+      ],
+      badge: 'Specialized',
+      link: '/immigration/complex-case-handling'
     },
     {
+      slug: 'post-arrival-settlement-services',
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -82,19 +134,33 @@ const ImmigrationPage = () => {
       ),
       title: 'Post-Arrival Settlement Services',
       description: 'Comprehensive support for housing, banking, community integration, and essential services after you arrive in Canada.',
-      link: '/immigration/settlement'
+      longDescription: 'Your journey doesn\'t end when you land in Canada. We provide comprehensive settlement support to help you integrate successfully, from finding housing and opening bank accounts to connecting with community services and navigating Canadian systems.',
+      benefits: [
+        'Airport pickup coordination',
+        'Housing search assistance',
+        'Banking and SIN setup',
+        'Healthcare registration',
+        'School enrollment support',
+        'Community integration programs'
+      ],
+      link: '/immigration/post-arrival-settlement-services'
     },
   ];
 
   // Use API data if available, otherwise use defaults
   const services = apiServices?.length > 0
     ? apiServices.map(service => ({
-        icon: null, // Icons will be handled by slug-based logic
-        title: service.title,
-        description: service.description,
-        link: `/immigration/${service.slug || service._id}`,
-        slug: service.slug
-      }))
+      _id: service._id,
+      slug: service.slug,
+      icon: null, // Icons will be handled by slug-based logic
+      title: service.title,
+      description: service.description,
+      longDescription: service.longDescription,
+      benefits: service.benefits,
+      image: service.image,
+      badge: service.badge,
+      link: `/immigration/${service.slug || service._id}`
+    }))
     : defaultServices;
 
   // Process steps from settings or defaults
@@ -218,14 +284,14 @@ const ImmigrationPage = () => {
           {processSteps.map((step, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-xl shadow-card relative group hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1"
+              className="bg-white p-6 rounded-xl shadow-card relative group hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 pt-8"
               style={{
                 opacity: isProcessVisible ? 1 : 0,
                 transform: isProcessVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
                 transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`
               }}
             >
-              <div className="absolute -top-4 -left-4 w-10 h-10 bg-primary-blue rounded-full flex items-center justify-center text-white font-heading font-bold transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary-red">
+              <div className="absolute top-4 left-4 lg:absolute lg:-top-4 lg:-left-4 w-10 h-10 bg-primary-blue rounded-full flex items-center justify-center text-white font-heading font-bold transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary-red">
                 {step.number || step.step}
               </div>
               <h4 className="text-lg font-heading font-semibold text-primary-blue mb-2 mt-2 transition-colors duration-300 group-hover:text-primary-red">
@@ -319,11 +385,11 @@ const ImmigrationPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button to="/assessment" variant="gold" size="lg" className="hover-lift">
-              Free Assessment
-            </Button>
-            <Button to="/contact" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
               Book Consultation
             </Button>
+            {/* <Button to="/contact" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
+              Book Consultation
+            </Button> */}
           </div>
         </div>
       </Section>

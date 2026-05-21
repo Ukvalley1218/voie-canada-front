@@ -21,6 +21,7 @@ export const useFetchData = (apiCall, fallbackData, options = {}) => {
 
     try {
       const response = await apiCall();
+      console.log('useFetchData: API response:', response);
 
       // Handle the response structure
       let responseData = response;
@@ -28,16 +29,21 @@ export const useFetchData = (apiCall, fallbackData, options = {}) => {
         responseData = response.data;
       }
 
+      console.log('useFetchData: Extracted data:', responseData);
+
       // Check if we got valid data
       const hasData = Array.isArray(responseData)
         ? responseData.length > 0
         : responseData && Object.keys(responseData).length > 0;
+
+      console.log('useFetchData: hasData:', hasData, 'isArray:', Array.isArray(responseData));
 
       if (hasData) {
         setData(responseData);
         setUsingFallback(false);
       } else {
         // No data from API, use fallback
+        console.log('useFetchData: Using fallback data');
         setData(fallbackData);
         setUsingFallback(true);
       }

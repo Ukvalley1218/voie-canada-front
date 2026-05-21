@@ -66,16 +66,16 @@ const TestimonialCard = ({
 
       {/* Author Info */}
       <div className="relative flex items-center">
-        {/* {photo ? (
+        {photo ? (
           <div className="relative mr-4">
             <img
               src={photo}
               alt={name}
-              className="w-14 h-14 rounded-full object-cover ring-2 ring-primary-blue/20 transition-all duration-300 group-hover:ring-primary-blue"
+              className="w-14 h-14 rounded-full object-cover ring-2 ring-primary-blue/20 transition-all duration-300"
             />
             {category && (
-              <span className={`absolute -bottom-1 -right-1 text-xs px-2 py-0.5 rounded-full ${categoryColors[category]}`}>
-                {categoryLabels[category]?.charAt(0)}
+              <span className={`absolute -bottom-1 -right-1 text-xs px-2 py-0.5 rounded-full ${categoryColors[category] || 'bg-gray-100 text-gray-800'}`}>
+                {categoryLabels[category]?.charAt(0) || 'P'}
               </span>
             )}
           </div>
@@ -83,16 +83,16 @@ const TestimonialCard = ({
           <div className="relative mr-4">
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-blue to-primary-red flex items-center justify-center">
               <span className="text-white font-semibold text-lg">
-                {name?.charAt(0)}
+                {name?.charAt(0) || 'A'}
               </span>
             </div>
             {category && (
-              <span className={`absolute -bottom-1 -right-1 text-xs px-2 py-0.5 rounded-full ${categoryColors[category]}`}>
-                {categoryLabels[category]?.charAt(0)}
+              <span className={`absolute -bottom-1 -right-1 text-xs px-2 py-0.5 rounded-full ${categoryColors[category] || 'bg-gray-100 text-gray-800'}`}>
+                {categoryLabels[category]?.charAt(0) || 'P'}
               </span>
             )}
           </div>
-        )} */}
+        )}
 
         <div className="flex-grow">
           <h4 className="font-heading font-semibold text-text-dark transition-colors duration-300 hover:text-primary-blue">
@@ -104,8 +104,8 @@ const TestimonialCard = ({
             </p>
           )}
           {category && (
-            <span className={`inline-block text-xs font-medium mt-1 px-2 py-0.5 rounded-full ${categoryColors[category]}`}>
-              {categoryLabels[category]}
+            <span className={`inline-block text-xs font-medium mt-1 px-2 py-0.5 rounded-full ${categoryColors[category] || 'bg-gray-100 text-gray-800'}`}>
+              {categoryLabels[category] || category}
             </span>
           )}
         </div>

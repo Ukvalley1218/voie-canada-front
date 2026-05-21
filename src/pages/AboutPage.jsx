@@ -70,9 +70,9 @@ const AboutPage = () => {
 
   const values = aboutPage?.values?.length > 0
     ? aboutPage.values.map((v, index) => ({
-        ...v,
-        icon: defaultValues[index % defaultValues.length]?.icon
-      }))
+      ...v,
+      icon: defaultValues[index % defaultValues.length]?.icon
+    }))
     : defaultValues;
 
   // Get certifications from settings or use defaults
@@ -117,8 +117,15 @@ const AboutPage = () => {
         image={aboutPage?.storyImage || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'}
         imageAlt="Voie Canada team collaboration"
         reverse={false}
+        // cta={{
+        //   primary: { label: 'Meet Our Team', to: '#team', variant: 'primary' }
+        // }}
         cta={{
-          primary: { label: 'Meet Our Team', to: '#team', variant: 'primary' }
+          primary: {
+            label: 'Meet Our Team',
+            onClick: () => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' }),
+            variant: 'primary'
+          }
         }}
       />
 
@@ -312,9 +319,9 @@ const AboutPage = () => {
             <Button to="/contact" variant="gold" size="lg" className="hover-lift">
               Book Consultation
             </Button>
-            <Button to="/assessment" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
+            {/* <Button to="/assessment" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
               Free Assessment
-            </Button>
+            </Button> */}
           </div>
         </div>
       </Section>

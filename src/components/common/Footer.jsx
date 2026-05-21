@@ -16,7 +16,7 @@ const Footer = () => {
     { to: '/education', label: 'Education Services' },
     { to: '/success-stories', label: 'Success Stories' },
     { to: '/resources', label: 'Resources' },
-    { to: '/contact', label: 'Contact Us' },
+
   ];
 
   const immigrationServices = [
@@ -27,6 +27,14 @@ const Footer = () => {
     { to: '/immigration/complex-cases', label: 'Complex Cases' },
     { to: '/immigration/settlement', label: 'Settlement Services' },
   ];
+
+
+  const legalpages = [
+    { to: '/privacy-policy', label: 'Privacy Policy' },
+    { to: '/terms-of-service', label: 'Terms of Service' },
+
+  ];
+
 
   const educationServices = [
     { to: '/education/admissions', label: 'College Admissions' },
@@ -40,27 +48,27 @@ const Footer = () => {
   // Use social links from settings or fallback to defaults
   const displaySocialLinks = socialLinks && Object.keys(socialLinks).length > 0
     ? [
-        { href: socialLinks.facebook || 'https://facebook.com', label: 'Facebook', icon: 'facebook' },
-        { href: socialLinks.instagram || 'https://instagram.com', label: 'Instagram', icon: 'instagram' },
-        { href: socialLinks.linkedin || 'https://linkedin.com', label: 'LinkedIn', icon: 'linkedin' },
-        { href: socialLinks.twitter || 'https://twitter.com', label: 'Twitter', icon: 'twitter' },
-        { href: socialLinks.youtube || 'https://youtube.com', label: 'YouTube', icon: 'youtube' },
-      ].filter(link => link.href)
+      { href: socialLinks.facebook || 'https://facebook.com', label: 'Facebook', icon: 'facebook' },
+      { href: socialLinks.instagram || 'https://instagram.com', label: 'Instagram', icon: 'instagram' },
+      { href: socialLinks.linkedin || 'https://linkedin.com', label: 'LinkedIn', icon: 'linkedin' },
+      { href: socialLinks.twitter || 'https://twitter.com', label: 'Twitter', icon: 'twitter' },
+      { href: socialLinks.youtube || 'https://youtube.com', label: 'YouTube', icon: 'youtube' },
+    ].filter(link => link.href)
     : [
-        { href: 'https://facebook.com', label: 'Facebook', icon: 'facebook' },
-        { href: 'https://instagram.com', label: 'Instagram', icon: 'instagram' },
-        { href: 'https://linkedin.com', label: 'LinkedIn', icon: 'linkedin' },
-        { href: 'https://twitter.com', label: 'Twitter', icon: 'twitter' },
-        { href: 'https://youtube.com', label: 'YouTube', icon: 'youtube' },
-      ];
+      { href: 'https://facebook.com', label: 'Facebook', icon: 'facebook' },
+      { href: 'https://instagram.com', label: 'Instagram', icon: 'instagram' },
+      { href: 'https://linkedin.com', label: 'LinkedIn', icon: 'linkedin' },
+      { href: 'https://twitter.com', label: 'Twitter', icon: 'twitter' },
+      { href: 'https://youtube.com', label: 'YouTube', icon: 'youtube' },
+    ];
 
   // Use certifications from settings or fallback to defaults
   const displayCertifications = certifications?.length > 0
     ? certifications
     : [
-        { name: 'ICCRC', description: 'Immigration Consultants of Canada Regulatory Council' },
-        { name: 'CAPIC', description: 'Canadian Association of Professional Immigration Consultants' },
-      ];
+      { name: 'ICCRC', description: 'Immigration Consultants of Canada Regulatory Council' },
+      { name: 'CAPIC', description: 'Canadian Association of Professional Immigration Consultants' },
+    ];
 
   const getSocialIcon = (iconName) => {
     const icons = {
@@ -95,31 +103,34 @@ const Footer = () => {
 
   return (
     <footer className="bg-primary-blue text-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5">
+      {/* Background decoration - clipped to prevent overflow */}
+      <div className="absolute inset-0 opacity-5 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-white rounded-full blur-3xl" />
       </div>
 
       {/* Main Footer */}
-      <div className="relative py-12 lg:py-16">
+      <div className="relative py-10 lg:py-16">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {/* Company Info */}
-            <div className="lg:col-span-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+
+            {/* Company Info - full width on mobile, spans across on larger */}
+            <div className="sm:col-span-2 lg:col-span-1">
               <Link to="/" className="flex items-center mb-4 group">
-                <div className="w-auto h-14 flex items-center justify-center mr-3 transition-transform duration-300 group-hover:scale-110">
-                  <img src={logo} alt="VOIE LOGO IMG"  className='w-auto h-14 '/>
+                <div className="w-auto h-12 flex items-center justify-center mr-3 transition-transform duration-300 group-hover:scale-110">
+                  <img src={logo} alt="VOIE LOGO IMG" className="w-auto h-12" />
                 </div>
-                
               </Link>
-              <p className="text-white/80 mb-4 leading-relaxed">
+              <p className="text-white/80 mb-4 leading-relaxed text-sm sm:text-base">
                 {footer?.aboutText || 'Your trusted partner for Canadian immigration and education services. Helping professionals, entrepreneurs, and students achieve their Canadian dream.'}
               </p>
               {/* Trust Badges */}
-              <div className="flex items-center space-x-4 mt-6">
+              <div className="flex flex-wrap items-center gap-3 mt-4">
                 {displayCertifications.slice(0, 2).map((cert, index) => (
-                  <div key={index} className="bg-white/10 px-3 py-2 rounded-lg text-sm hover:bg-white/20 transition-colors cursor-default">
+                  <div
+                    key={index}
+                    className="bg-white/10 px-3 py-2 rounded-lg text-sm hover:bg-white/20 transition-colors cursor-default"
+                  >
                     <span className="text-accent-gold font-semibold">{cert.name}</span> Certified
                   </div>
                 ))}
@@ -128,11 +139,11 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-heading font-semibold text-lg mb-4 relative inline-block">
+              <h4 className="font-heading font-semibold text-base lg:text-lg mb-4 relative inline-block">
                 Quick Links
-                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-accent-gold" />
+                <span className="absolute -bottom-1 left-0 w-10 h-0.5 bg-accent-gold" />
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3 mt-2">
                 {quickLinks.map((link, index) => (
                   <li
                     key={link.to}
@@ -141,7 +152,7 @@ const Footer = () => {
                   >
                     <Link
                       to={link.to}
-                      className="text-white/80 hover:text-white transition-colors relative group"
+                      className="text-white/80 hover:text-white transition-colors relative group text-sm sm:text-base"
                     >
                       <span className="relative z-10">{link.label}</span>
                       <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-accent-gold group-hover:w-full transition-all duration-300" />
@@ -151,39 +162,14 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Immigration Services */}
-            <div>
-              <h4 className="font-heading font-semibold text-lg mb-4 relative inline-block">
-                Immigration Services
-                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-accent-gold" />
-              </h4>
-              <ul className="space-y-3">
-                {immigrationServices.map((link, index) => (
-                  <li
-                    key={link.to}
-                    className="transform transition-all duration-300 hover:translate-x-2"
-                    style={{ transitionDelay: `${index * 50}ms` }}
-                  >
-                    <Link
-                      to={link.to}
-                      className="text-white/80 hover:text-white transition-colors relative group"
-                    >
-                      <span className="relative z-10">{link.label}</span>
-                      <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-accent-gold group-hover:w-full transition-all duration-300" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Education Services & Contact */}
             <div>
               <h4 className="font-heading font-semibold text-lg mb-4 relative inline-block">
-                Education Services
+                Legal Pages
                 <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-accent-gold" />
               </h4>
               <ul className="space-y-3 mb-6">
-                {educationServices.slice(0, 4).map((link, index) => (
+                {legalpages.slice(0, 4).map((link, index) => (
                   <li
                     key={link.to}
                     className="transform transition-all duration-300 hover:translate-x-2"
@@ -224,6 +210,34 @@ const Footer = () => {
                 )}
               </div>
             </div>
+            {/* Legal Pages */}
+            {/* <div>
+              <h4 className="font-heading font-semibold text-base lg:text-lg mb-4 relative inline-block">
+                Legal Pages
+                <span className="absolute -bottom-1 left-0 w-10 h-0.5 bg-accent-gold" />
+              </h4>
+              <ul className="space-y-2 sm:space-y-3 mt-2">
+                {legalpages.map((link, index) => (
+                  <li
+                    key={link.to}
+                    className="transform transition-all duration-300 hover:translate-x-2"
+                    style={{ transitionDelay: `${index * 50}ms` }}
+                  >
+                    <Link
+                      to={link.to}
+                      className="text-white/80 hover:text-white transition-colors relative group text-sm sm:text-base"
+                    >
+                      <span className="relative z-10">{link.label}</span>
+                      <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-accent-gold group-hover:w-full transition-all duration-300" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+
+            </div> */}
+
+
           </div>
         </Container>
       </div>
@@ -252,15 +266,7 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Legal Links */}
-            <div className="flex items-center space-x-4 text-sm">
-              <Link to="/privacy" className="text-white/60 hover:text-white transition-colors">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="text-white/60 hover:text-white transition-colors">
-                Terms of Service
-              </Link>
-            </div>
+
           </div>
         </Container>
       </div>

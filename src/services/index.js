@@ -9,6 +9,7 @@ export const inquiryService = {
 export const blogService = {
   getAll: (params) => api.get('/blog', { params }),
   getBySlug: (slug) => api.get(`/blog/${slug}`),
+  getFeatured: (params) => api.get('/blog', { params: { ...params, isPublished: 'true' } }),
   create: (data) => api.post('/blog', data),
   update: (id, data) => api.put(`/blog/${id}`, data),
   delete: (id) => api.delete(`/blog/${id}`)
@@ -23,7 +24,7 @@ export const serviceService = {
 export const testimonialService = {
   getAll: (params) => api.get('/testimonials', { params }),
   getById: (id) => api.get(`/testimonials/${id}`),
-  getFeatured: () => api.get('/testimonials', { params: { featured: true } })
+  getFeatured: () => api.get('/testimonials', { params: { featured: 'true', isActive: 'true' } })
 };
 
 export const settingsService = {

@@ -28,25 +28,25 @@ const Navbar = () => {
     {
       to: '/immigration',
       label: 'Immigration',
-      children: [
-        { to: '/immigration/express-entry', label: 'Express Entry' },
-        { to: '/immigration/startup-visa', label: 'Startup Visa' },
-        { to: '/immigration/pnp', label: 'Provincial Nominee' },
-        { to: '/immigration/francophone', label: 'Francophone' },
-      ]
+      // children: [
+      //   { to: '/immigration/express-entry', label: 'Express Entry' },
+      //   { to: '/immigration/startup-visa', label: 'Startup Visa' },
+      //   { to: '/immigration/pnp', label: 'Provincial Nominee' },
+      //   { to: '/immigration/francophone', label: 'Francophone' },
+      // ]
     },
     {
       to: '/education',
       label: 'Education',
-      children: [
-        { to: '/education/admissions', label: 'Admissions' },
-        { to: '/education/specialized-programs', label: 'Specialized Programs' },
-        { to: '/education/scholarships', label: 'Scholarships' },
-      ]
+      // children: [
+      //   { to: '/education/admissions', label: 'Admissions' },
+      //   { to: '/education/specialized-programs', label: 'Specialized Programs' },
+      //   { to: '/education/scholarships', label: 'Scholarships' },
+      // ]
     },
     { to: '/success-stories', label: 'Success Stories' },
     { to: '/resources', label: 'Resources' },
-    { to: '/contact', label: 'Contact' },
+    // { to: '/contact', label: 'Contact' },
   ];
 
   const isActiveLink = (path) => {
@@ -55,11 +55,13 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-white/98 backdrop-blur-md shadow-lg py-3'
-          : 'bg-white/95 py-4'
-      }`}
+      // className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+      //   ? 'bg-white/98 backdrop-blur-md shadow-lg py-3'
+      //   : 'bg-white/95 py-4'
+      //   }`}
+
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white shadow-lg py-3' : 'bg-white py-4'
+        }`}
     >
       {/* Animated border on scroll */}
       <div className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary-blue via-primary-red to-accent-gold transition-all duration-300 ${isScrolled ? 'w-full' : 'w-0'}`} />
@@ -73,7 +75,7 @@ const Navbar = () => {
             onMouseEnter={() => setActiveDropdown(null)}
           >
             <div className="flex items-center">
-             <img src={logo} alt="VOIE LOGO IMG"  className='w-auto h-12 '/>
+              <img src={logo} alt="VOIE LOGO IMG" className='w-auto h-12 ' />
             </div>
           </Link>
 
@@ -88,11 +90,10 @@ const Navbar = () => {
               >
                 <Link
                   to={link.to}
-                  className={`font-heading font-medium transition-all duration-300 relative group ${
-                    isActiveLink(link.to)
-                      ? 'text-primary-red'
-                      : 'text-text-dark hover:text-primary-red'
-                  }`}
+                  className={`font-heading font-medium transition-all duration-300 relative group ${isActiveLink(link.to)
+                    ? 'text-primary-red'
+                    : 'text-text-dark hover:text-primary-red'
+                    }`}
                 >
                   <span className="relative z-10">{link.label}</span>
                   {/* Animated underline */}
@@ -107,11 +108,10 @@ const Navbar = () => {
                 {/* Dropdown for children */}
                 {link.children && (
                   <div
-                    className={`absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-card-lg overflow-hidden transition-all duration-300 ${
-                      activeDropdown === link.to
-                        ? 'opacity-100 visible translate-y-0'
-                        : 'opacity-0 invisible -translate-y-2'
-                    }`}
+                    className={`absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-card-lg overflow-hidden transition-all duration-300 ${activeDropdown === link.to
+                      ? 'opacity-100 visible translate-y-0'
+                      : 'opacity-0 invisible -translate-y-2'
+                      }`}
                   >
                     <div className="py-2">
                       {link.children.map((child, index) => (
@@ -134,17 +134,17 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link
+            {/* <Link
               to="/assessment"
               className="px-4 py-2 text-primary-blue border-2 border-primary-blue rounded-lg font-heading font-medium transition-all duration-300 hover:bg-primary-blue hover:text-white hover:shadow-lg"
             >
               Free Assessment
-            </Link>
+            </Link> */}
             <Link
               to="/contact"
               className="px-4 py-2 bg-primary-blue text-white rounded-lg font-heading font-medium transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:scale-[1.02] relative overflow-hidden group"
             >
-              <span className="relative z-10">Book Consultation</span>
+              <span className="relative z-10">Contact Us</span>
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
             </Link>
           </div>
@@ -164,10 +164,13 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Menu */}
+        {/* <div
+          className={`lg:hidden overflow-hidden transition-all duration-500 ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+            }`}
+        > */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-500 ${
-            isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-          }`}
+          className={`lg:hidden overflow-hidden transition-all duration-500 bg-white ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+            }`}
         >
           <div className="pt-4 pb-2 space-y-1 border-t border-gray-100">
             {navLinks.map((link, index) => (
@@ -178,11 +181,10 @@ const Navbar = () => {
               >
                 <Link
                   to={link.to}
-                  className={`block py-2 px-4 font-heading font-medium rounded-lg transition-colors ${
-                    isActiveLink(link.to)
-                      ? 'text-primary-red bg-primary-red/5'
-                      : 'text-text-dark hover:text-primary-red hover:bg-gray-50'
-                  }`}
+                  className={`block py-2 px-4 font-heading font-medium rounded-lg transition-colors ${isActiveLink(link.to)
+                    ? 'text-primary-red bg-primary-red/5'
+                    : 'text-text-dark hover:text-primary-red hover:bg-gray-50'
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -207,17 +209,17 @@ const Navbar = () => {
             className={`py-4 space-y-3 transform transition-all duration-300 ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
             style={{ transitionDelay: '300ms' }}
           >
-            <Link
+            {/* <Link
               to="/assessment"
               className="block w-full px-4 py-3 text-center text-primary-blue border-2 border-primary-blue rounded-lg font-heading font-medium transition-all hover:bg-primary-blue hover:text-white"
             >
               Free Assessment
-            </Link>
+            </Link> */}
             <Link
               to="/contact"
               className="block w-full px-4 py-3 text-center bg-primary-blue text-white rounded-lg font-heading font-medium transition-all hover:bg-blue-700"
             >
-              Book Consultation
+              Contact Us
             </Link>
           </div>
         </div>

@@ -102,6 +102,7 @@ const SectionLayout = ({
               {cta.primary && (
                 <Button
                   to={cta.primary.to}
+                  onClick={cta.primary.onClick}
                   variant={cta.primary.variant || 'primary'}
                   className="hover-shine"
                 >
@@ -111,6 +112,7 @@ const SectionLayout = ({
               {cta.secondary && (
                 <Button
                   to={cta.secondary.to}
+                  onClick={cta.secondary.onClick}
                   variant={cta.secondary.variant || 'secondary'}
                 >
                   {cta.secondary.label}

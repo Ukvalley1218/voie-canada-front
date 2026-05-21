@@ -52,11 +52,25 @@ const HomePage = () => {
     defaultEducationServices
   );
 
-  // Fetch testimonials
-  const { data: testimonials } = useFetchData(
-    () => testimonialService.getFeatured(),
+  // Fetch testimonials - get all active testimonials (same as SuccessStoriesPage)
+  const { data: testimonials, loading: testimonialsLoading, error: testimonialsError } = useFetchData(
+    () => testimonialService.getAll({ isActive: 'true' }),
     defaultTestimonials
   );
+
+  // Debug: Log testimonials data
+  console.log('HomePage testimonials:', {
+    testimonialsLength: testimonials?.length,
+    testimonialsLoading,
+    testimonialsError,
+    isArray: Array.isArray(testimonials),
+    firstTestimonial: testimonials?.[0]
+  });
+
+  // Ensure testimonials is always an array with fallback
+  const displayTestimonials = testimonials && Array.isArray(testimonials) && testimonials.length > 0
+    ? testimonials
+    : defaultTestimonials;
 
   // Get process steps with fallback
   const displayProcessSteps = processSteps?.length > 0 ? processSteps : defaultProcessSteps;
@@ -71,10 +85,10 @@ const HomePage = () => {
   const differentiatorPoints = differentiator?.points?.length > 0
     ? differentiator.points
     : [
-        { title: 'Specialized Student Support', description: 'Expert guidance for students with learning challenges' },
-        { title: 'Entrepreneur Immigration', description: 'Dedicated startup visa and business immigration programs' },
-        { title: 'Personalized Approach', description: 'One-on-one guidance tailored to your unique journey' }
-      ];
+      { title: 'Specialized Student Support', description: 'Expert guidance for students with learning challenges' },
+      { title: 'Entrepreneur Immigration', description: 'Dedicated startup visa and business immigration programs' },
+      { title: 'Personalized Approach', description: 'One-on-one guidance tailored to your unique journey' }
+    ];
 
   return (
     <>
@@ -192,9 +206,7 @@ const HomePage = () => {
         />
 
         <div ref={processRef} className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8 relative">
-            {/* Connecting line - hidden on smaller screens */}
-            <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-primary-blue via-primary-red to-secondary-green" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
 
             {displayProcessSteps.map((step, index) => (
               <div
@@ -206,9 +218,17 @@ const HomePage = () => {
                   transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.15}s`
                 }}
               >
+                {/* ✅ Connecting line — rendered per step, not as one absolute overlay */}
+                {/* Only show on lg screens, and NOT on the last item of each row (every 5th) */}
+                {(index + 1) % 5 !== 0 && index !== displayProcessSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary-blue via-primary-red to-secondary-green z-0" />
+                )}
+
                 {/* Step number circle */}
                 <div className="relative z-10 w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 bg-white rounded-full shadow-card flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-card-hover">
-                  <span className="text-2xl sm:text-3xl font-heading font-bold text-primary-blue">{step.number || index + 1}</span>
+                  <span className="text-2xl sm:text-3xl font-heading font-bold text-primary-blue">
+                    {step.number || index + 1}
+                  </span>
                 </div>
 
                 <h3 className="text-sm sm:text-base font-heading font-semibold text-primary-blue mb-1 sm:mb-2 text-center transition-colors group-hover:text-primary-red min-h-[2rem] sm:min-h-[2.5rem]">
@@ -224,43 +244,52 @@ const HomePage = () => {
       </Section>
 
       {/* Why Choose Us - Enhanced */}
+      {/* Why Choose Us - Enhanced */}
       <Section background="gray">
         <div ref={whyChooseRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
           {/* Image Side */}
-          <div
-            className="relative order-2 lg:order-1"
-            style={{
-              opacity: isWhyChooseVisible ? 1 : 0,
-              transform: isWhyChooseVisible ? 'translateX(0) scale(1)' : 'translateX(-50px) scale(0.95)',
-              transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
-            }}
-          >
-            <img
-              src={differentiator?.image || "https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png"}
-              alt="Why choose us"
-              className="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] object-cover rounded-2xl shadow-xl"
-            />
-            {/* Overlay card - hidden on mobile */}
+          <div className="relative order-2 lg:order-1 pb-0 lg:pb-8 pr-0 lg:pr-8">
+            {/* Image wrapper */}
             <div
-              className="hidden lg:block absolute -bottom-6 -right-6 bg-white rounded-xl shadow-xl p-6 max-w-xs"
+              style={{
+                opacity: isWhyChooseVisible ? 1 : 0,
+                transform: isWhyChooseVisible ? 'translateX(0) scale(1)' : 'translateX(-50px) scale(0.95)',
+                transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
+              }}
+            >
+              <img
+                src={differentiator?.image || "https://geic.in/wp-content/uploads/2024/05/LOILhdIYSBOmfvQKpyIjYg-768x432.png"}
+                alt="Why choose us"
+                className="w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] object-cover rounded-2xl shadow-xl"
+              />
+            </div>
+
+            {/* Overlay card - absolute on desktop, normal flow centered card on mobile */}
+            <div
+              className="lg:absolute lg:bottom-0 lg:right-0 
+                   flex lg:block justify-center mt-4 lg:mt-0
+                   z-10"
               style={{
                 opacity: isWhyChooseVisible ? 1 : 0,
                 transform: isWhyChooseVisible ? 'translateX(0) translateY(0)' : 'translateX(30px) translateY(30px)',
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s'
+                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s'
               }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-secondary-green/10 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-secondary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
+              <div className="bg-white rounded-xl shadow-xl p-4 sm:p-6 w-full max-w-xs">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 bg-secondary-green/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-secondary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xl font-heading font-bold text-primary-blue">95%</div>
+                    <div className="text-sm text-text-muted">Success Rate</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-xl font-heading font-bold text-primary-blue">95%</div>
-                  <div className="text-sm text-text-muted">Success Rate</div>
-                </div>
+                <p className="text-text-dark text-sm">Trusted by 500+ families worldwide</p>
               </div>
-              <p className="text-text-dark text-sm">Trusted by 500+ families worldwide</p>
             </div>
           </div>
 
@@ -325,9 +354,9 @@ const HomePage = () => {
               </Button>
             </div>
           </div>
+
         </div>
       </Section>
-
       {/* FAQs Section */}
       <Section>
         <SectionHeader
@@ -372,11 +401,11 @@ const HomePage = () => {
             ))}
           </div>
 
-          <div className="text-center mt-6 sm:mt-8">
+          {/* <div className="text-center mt-6 sm:mt-8">
             <Button to="/faq" variant="secondary" className="hover-lift">
               View All FAQs
             </Button>
-          </div>
+          </div> */}
         </div>
       </Section>
 
@@ -385,7 +414,7 @@ const HomePage = () => {
         title={testimonialsSection?.title || 'Success Stories'}
         subtitle={testimonialsSection?.subtitle || 'Real Journeys. Real Success.'}
         description={testimonialsSection?.description || 'From visa approvals to inclusive education placements, we make every journey possible.'}
-        testimonials={testimonials}
+        testimonials={displayTestimonials}
         background={testimonialsSection?.backgroundColor || 'gray'}
       />
 
@@ -395,7 +424,7 @@ const HomePage = () => {
         description={ctaBanner?.description || ctaSection?.description || 'Take the first step towards your Canadian dream. Get a free assessment or book a consultation with our experts.'}
         backgroundImage={ctaBanner?.backgroundImage || 'https://i0.wp.com/calmatters.org/wp-content/uploads/2025/06/050625-TurnitinAICollege-JAH-CM-02.jpg?resize=1536%2C1024&ssl=1'}
         backgroundColor={ctaBanner?.backgroundColor || 'blue'}
-        primaryButton={ctaBanner?.primaryButton || ctaSection?.primaryButton || { text: 'Free Assessment', link: '/assessment' }}
+        // primaryButton={ctaBanner?.primaryButton || ctaSection?.primaryButton || { text: 'Free Assessment', link: '/assessment' }}
         secondaryButton={ctaBanner?.secondaryButton || ctaSection?.secondaryButton || { text: 'Book Consultation', link: '/contact' }}
       />
 

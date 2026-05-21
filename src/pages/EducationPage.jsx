@@ -24,39 +24,99 @@ const EducationPage = () => {
   // Default services for fallback
   const defaultServices = [
     {
+      slug: 'college-university-admissions',
       title: 'College & University Admissions',
       description: 'Secure admission to Canada\'s top institutions with personalized guidance on programs, applications, and enrollment.',
-      link: '/education/admissions',
+      longDescription: 'Navigate the Canadian higher education landscape with confidence. Our admissions experts provide end-to-end support for college and university applications, helping you identify the right programs, prepare compelling applications, and secure your place at top Canadian institutions.',
+      benefits: [
+        'Personalized program selection based on your goals',
+        'Application review and optimization',
+        'Essay and personal statement guidance',
+        'Interview preparation support',
+        'Deadline management and reminders',
+        'Acceptance and enrollment assistance'
+      ],
+      link: '/education/college-university-admissions',
       badge: null
     },
     {
+      slug: 'specialized-programs-challenged-students',
       title: 'Specialized Programs for Challenged Students',
       description: 'Inclusive support for students with learning challenges, special needs, and unique educational requirements.',
-      link: '/education/specialized-programs',
+      longDescription: 'Every student deserves access to quality education. We specialize in connecting students with learning challenges, ADHD, dyslexia, and other unique needs with institutions that offer the right support systems and inclusive environments.',
+      benefits: [
+        'Assessment of learning support needs',
+        'Matching with inclusive institutions',
+        'IEP advocacy and coordination',
+        'Accommodation request assistance',
+        'Ongoing support coordination',
+        'Family consultation and guidance'
+      ],
+      link: '/education/specialized-programs-challenged-students',
       badge: 'Unique'
     },
     {
+      slug: 'bridge-foundation-programs',
       title: 'Bridge & Foundation Programs',
       description: 'Prepare for success with bridge programs and foundation courses designed for international students.',
-      link: '/education/bridge-programs',
+      longDescription: 'Bridge programs provide a crucial pathway for international students to transition smoothly into Canadian higher education. We help you identify and enroll in programs that build your academic foundation and language skills.',
+      benefits: [
+        'Program matching based on academic background',
+        'Language proficiency preparation',
+        'Academic skills development',
+        'Cultural transition support',
+        'Pathway planning to degree programs',
+        'Credit transfer guidance'
+      ],
+      link: '/education/bridge-foundation-programs',
       badge: null
     },
     {
+      slug: 'scholarship-financial-aid-guidance',
       title: 'Scholarship & Financial Aid Guidance',
       description: 'Maximize your opportunities with tailored scholarship support and financial aid application assistance.',
-      link: '/education/scholarships',
+      longDescription: 'Financing your education shouldn\'t be a barrier to your dreams. Our scholarship specialists help you identify, apply for, and secure financial aid opportunities tailored to your academic profile and circumstances.',
+      benefits: [
+        'Scholarship opportunity matching',
+        'Application essay support',
+        'Financial aid form assistance',
+        'Deadline tracking and reminders',
+        'Renewal and continuation guidance',
+        'Budget planning consultation'
+      ],
+      link: '/education/scholarship-financial-aid-guidance',
       badge: null
     },
     {
+      slug: 'career-clarity-aptitude-testing',
       title: 'Career Clarity & Aptitude Testing',
       description: 'Discover the right program for your future with professional career guidance and aptitude assessments.',
-      link: '/education/career-clarity',
+      longDescription: 'Not sure which path to take? Our career clarity programs combine professional aptitude testing with personalized counseling to help you identify programs that align with your strengths, interests, and career goals.',
+      benefits: [
+        'Comprehensive aptitude assessment',
+        'Personality and interest profiling',
+        'Career path recommendations',
+        'Program alignment analysis',
+        'One-on-one counseling sessions',
+        'Action plan development'
+      ],
+      link: '/education/career-clarity-aptitude-testing',
       badge: null
     },
     {
+      slug: 'parent-advisory-services',
       title: 'Parent Advisory Services',
       description: 'Comprehensive guidance for families relocating with children, including school selection and educational planning.',
-      link: '/education/parent-advisory',
+      longDescription: 'Moving to Canada with children? Our parent advisory services help families navigate the Canadian education system, from school selection to enrollment, ensuring your children have the best possible start in their new environment.',
+      benefits: [
+        'School district analysis and selection',
+        'Enrollment process guidance',
+        'Special education coordination',
+        'Extracurricular planning',
+        'Parent-teacher communication support',
+        'Educational pathway planning'
+      ],
+      link: '/education/parent-advisory-services',
       badge: null
     },
   ];
@@ -64,11 +124,17 @@ const EducationPage = () => {
   // Use API data if available, otherwise use defaults
   const services = apiServices?.length > 0
     ? apiServices.map(service => ({
-        title: service.title,
-        description: service.description,
-        link: `/education/${service.slug || service._id}`,
-        badge: service.badge
-      }))
+      _id: service._id,
+      slug: service.slug,
+      title: service.title,
+      description: service.description,
+      longDescription: service.longDescription,
+      benefits: service.benefits,
+      image: service.image,
+      icon: service.icon,
+      link: `/education/${service.slug || service._id}`,
+      badge: service.badge
+    }))
     : defaultServices;
 
   // Icon mapping for services
@@ -284,44 +350,7 @@ const EducationPage = () => {
         </div>
       </Section>
 
-      {/* Scholarship Finder CTA */}
-      <Section>
-        <div
-          ref={scholarshipRef}
-          className="bg-gradient-to-r from-primary-blue to-primary-red rounded-2xl p-8 lg:p-12 text-white relative overflow-hidden"
-          style={{
-            opacity: isScholarshipVisible ? 1 : 0,
-            transform: isScholarshipVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
-        >
-          {/* Background decoration */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
-          </div>
 
-          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-heading font-bold mb-4">
-                Find Scholarships for You
-              </h2>
-              <p className="text-white/80 mb-6">
-                Discover scholarships and financial aid opportunities tailored to your academic profile. Our scholarship finder tool helps you identify funding options for your Canadian education journey.
-              </p>
-              <Button to="/education/scholarships" variant="gold" size="lg" className="hover-lift">
-                Explore Scholarships
-              </Button>
-            </div>
-            <div className="text-center">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 inline-block transition-transform duration-300 hover:scale-105">
-                <div className="text-5xl font-heading font-bold text-accent-gold mb-2">$2M+</div>
-                <div className="text-white/80">Scholarships secured for our students</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
 
       {/* CTA */}
       <Section background="gray">
@@ -342,11 +371,11 @@ const EducationPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button to="/assessment" variant="gold" size="lg" className="hover-lift">
-              Free Assessment
-            </Button>
-            <Button to="/contact" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
               Book Consultation
             </Button>
+            {/* <Button to="/contact" variant="secondary" size="lg" className="!bg-white/10 !border-black !text-black hover:!bg-white hover:!text-primary-blue hover-lift">
+              Book Consultation
+            </Button> */}
           </div>
         </div>
       </Section>
